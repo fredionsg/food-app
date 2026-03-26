@@ -59,6 +59,25 @@ db.exec(`
   );
 `)
 
+// ── Seed test account ──
+const hasTest = db.prepare('SELECT id FROM profiles WHERE email = ?').get('test')
+if (!hasTest) {
+  db.prepare(`
+    INSERT INTO profiles (first_name, last_name, email, password_hash, dob, country, medical_notes,
+      quick_choices, allergies, avoid, preferred, spice_level, special_notes)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    'Fred', 'Test', 'test', bcrypt.hashSync('test', 10),
+    '1995-06-15', 'UK', 'Mild IBS, occasional acid reflux',
+    JSON.stringify(['Gluten-free', 'Dairy-free', 'Low-FODMAP']),
+    JSON.stringify(['Peanuts', 'Shellfish', 'Sesame']),
+    JSON.stringify(['Red meat', 'MSG', 'Artificial sweeteners', 'Raw onion']),
+    JSON.stringify(['Rice', 'Chicken', 'Sweet potato', 'Salmon', 'Oats', 'Bananas', 'Ginger tea']),
+    'Mild',
+    'Lactose intolerant — can tolerate small amounts of aged cheese. Prefers grilled or steamed over fried.'
+  )
+}
+
 // ── Middleware ──
 app.use(cors())
 app.use(express.json())
