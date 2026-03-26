@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Utensils, ShieldCheck, FileText } from 'lucide-react'
+import { ArrowRight, Utensils, ShieldCheck, FileText, Sun, Moon } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 import LeafLogo from '../components/LeafLogo'
 import { OrganicBlob, CornerVine } from '../components/BotanicalAccent'
 
@@ -10,6 +11,8 @@ const features = [
 ]
 
 export default function Landing() {
+  const { dark, toggle } = useTheme()
+
   return (
     <div className="grain min-h-screen bg-cream flex flex-col relative overflow-hidden">
       {/* Organic background shapes */}
@@ -17,6 +20,13 @@ export default function Landing() {
       <OrganicBlob className="absolute -bottom-48 -left-48 w-[600px] h-[600px]" color="terracotta" />
       <CornerVine position="top-right" />
       <CornerVine position="bottom-left" />
+
+      {/* Theme toggle */}
+      <button onClick={toggle}
+        className={`absolute top-5 right-5 z-10 option-bounce p-2.5 rounded-xl transition-all duration-200 cursor-pointer ${dark ? 'bg-amber/15 text-amber hover:bg-amber/25' : 'bg-bark/5 text-bark-light hover:bg-bark/10'}`}
+        aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+        {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      </button>
 
       <div className="relative flex-1 flex flex-col items-center justify-center px-6 py-16">
         {/* Logo mark */}
