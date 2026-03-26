@@ -93,12 +93,12 @@ function ProgressRing({ step, total }) {
   )
 }
 
-// ── Auto-advance bar (shows after first tap on multi-select) ──
-function AutoAdvanceBar({ onGo, onCancel, seconds = 2 }) {
+// ── Auto-advance bar (inline, near the user's finger) ──
+function AutoAdvanceBar({ onGo, onCancel, seconds = 1 }) {
   const [remaining, setRemaining] = useState(seconds)
 
   useEffect(() => {
-    const interval = setInterval(() => setRemaining((r) => r - 0.05), 50)
+    const interval = setInterval(() => setRemaining((r) => r - 0.02), 20)
     return () => clearInterval(interval)
   }, [])
 
@@ -109,15 +109,13 @@ function AutoAdvanceBar({ onGo, onCancel, seconds = 2 }) {
   const progress = Math.max(0, remaining / seconds)
 
   return (
-    <div className="animate-fade-up fixed bottom-20 md:bottom-6 inset-x-0 z-40 px-4">
-      <div className="max-w-md mx-auto bg-bark/90 backdrop-blur-xl rounded-2xl p-3 flex items-center gap-3 shadow-lg">
-        {/* Progress shrink bar */}
-        <div className="flex-1 h-1.5 bg-white/20 rounded-full overflow-hidden">
+    <div className="mt-5 animate-fade-up">
+      <div className="bg-bark/90 backdrop-blur-xl rounded-2xl p-2.5 flex items-center gap-3">
+        <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
           <div className="h-full bg-terracotta rounded-full transition-none" style={{ width: `${progress * 100}%` }} />
         </div>
-        <span className="text-white/70 text-xs font-medium shrink-0">Moving on...</span>
         <button type="button" onClick={onCancel}
-          className="shrink-0 flex items-center gap-1.5 px-4 py-2 bg-white/15 hover:bg-white/25 text-white font-semibold text-sm rounded-xl transition-all cursor-pointer">
+          className="option-bounce shrink-0 flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 text-white font-semibold text-sm rounded-xl transition-all cursor-pointer">
           <X className="w-3.5 h-3.5" /> Wait
         </button>
       </div>
