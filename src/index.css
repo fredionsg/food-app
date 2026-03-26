@@ -247,9 +247,19 @@ body {
 }
 .pop-in { animation: pop-in 350ms cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* ── Option bounce on tap ── */
+/* ── Option bounce: hover lift + active squish ── */
+.option-bounce {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease;
+}
+@media (hover: hover) {
+  .option-bounce:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 6px 20px -4px rgba(74, 55, 40, 0.12);
+  }
+}
 .option-bounce:active {
-  transform: scale(0.92);
+  transform: scale(0.93) !important;
+  box-shadow: none !important;
   transition: transform 80ms ease;
 }
 
