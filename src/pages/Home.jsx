@@ -36,9 +36,9 @@ const actions = [
     icon: Settings,
     title: 'Dietary setup',
     desc: 'Update your allergies and preferences',
-    accent: '',
-    iconBg: 'bg-bark/8',
-    iconColor: 'text-bark-light',
+    accent: 'card-accent-olive',
+    iconBg: 'bg-olive/10',
+    iconColor: 'text-olive',
   },
 ]
 

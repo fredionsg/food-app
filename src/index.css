@@ -45,6 +45,11 @@
   --warning: #C89B3C;
   --warning-light: #FDF6E3;
 
+  /* Surfaces (for dark mode swap) */
+  --surface: #FFFFFF;
+  --surface-elevated: rgba(255, 255, 255, 0.7);
+  --surface-muted: rgba(255, 255, 255, 0.5);
+
   /* Grain texture */
   --grain-opacity: 0.035;
   --organic-radius: 20px;
@@ -53,40 +58,88 @@
   --shadow-glow: 0 0 0 4px rgba(198, 123, 92, 0.12);
 }
 
+/* ── Dark Mode ── */
+.dark {
+  --sage: #8A9A7B;
+  --sage-light: #A8B89A;
+  --sage-dark: #6B7B5A;
+  --sage-muted: #6B7B5A;
+  --olive: #94A86A;
+  --olive-light: #A8B87A;
+
+  --sand: #3D362C;
+  --sand-light: #2E2820;
+  --sand-lighter: #252018;
+  --cream: #1A1612;
+  --parchment: #211D17;
+
+  --terracotta: #D4896A;
+  --terracotta-dark: #C67B5C;
+  --terracotta-light: #B06840;
+  --terracotta-muted: #8A6050;
+  --clay: #D4A574;
+  --clay-light: #B08050;
+  --amber: #D4AA4A;
+
+  --bark: #E8DDD0;
+  --bark-light: #C4B8A8;
+  --bark-deep: #F0E8DA;
+
+  --charcoal: #EDE8DB;
+  --charcoal-light: #C4B8A8;
+  --stone: #9A9188;
+  --stone-light: #6B6156;
+
+  --error: #D4645A;
+  --error-light: #2E1A16;
+  --success: #8A9A7B;
+  --success-light: #1E2418;
+  --warning: #D4AA4A;
+  --warning-light: #2E2610;
+
+  --surface: #211D17;
+  --surface-elevated: rgba(45, 38, 30, 0.8);
+  --surface-muted: rgba(45, 38, 30, 0.5);
+
+  --grain-opacity: 0.04;
+  --shadow-soft: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
+  --shadow-lifted: 0 8px 32px -8px rgba(0, 0, 0, 0.4);
+}
+
 @theme {
   --font-sans: 'Raleway', system-ui, sans-serif;
   --font-serif: 'Lora', Georgia, serif;
-  --color-sage: #5C6B4F;
-  --color-sage-light: #8A9A7B;
-  --color-sage-dark: #3D4A34;
-  --color-sage-muted: #A8B89A;
-  --color-olive: #6B7B3C;
-  --color-olive-light: #94A86A;
-  --color-sand: #D4C9B0;
-  --color-sand-light: #EDE8DB;
-  --color-sand-lighter: #F5F0E6;
-  --color-cream: #FAF6EE;
-  --color-parchment: #F0EAD6;
-  --color-terracotta: #C67B5C;
-  --color-terracotta-dark: #A85E3F;
-  --color-terracotta-light: #E8A882;
-  --color-terracotta-muted: #D4A088;
-  --color-clay: #B5651D;
-  --color-clay-light: #D4A574;
-  --color-amber: #C89B3C;
-  --color-bark: #4A3728;
-  --color-bark-light: #7D5F49;
-  --color-bark-deep: #2E1F14;
-  --color-charcoal: #2C2416;
-  --color-charcoal-light: #4A4238;
-  --color-stone: #6B6156;
-  --color-stone-light: #9A9188;
-  --color-error: #B84233;
-  --color-error-light: #FDF0ED;
-  --color-success: #5C6B4F;
-  --color-success-light: #EDF2E8;
-  --color-warning: #C89B3C;
-  --color-warning-light: #FDF6E3;
+  --color-sage: var(--sage);
+  --color-sage-light: var(--sage-light);
+  --color-sage-dark: var(--sage-dark);
+  --color-sage-muted: var(--sage-muted);
+  --color-olive: var(--olive);
+  --color-olive-light: var(--olive-light);
+  --color-sand: var(--sand);
+  --color-sand-light: var(--sand-light);
+  --color-sand-lighter: var(--sand-lighter);
+  --color-cream: var(--cream);
+  --color-parchment: var(--parchment);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-dark: var(--terracotta-dark);
+  --color-terracotta-light: var(--terracotta-light);
+  --color-terracotta-muted: var(--terracotta-muted);
+  --color-clay: var(--clay);
+  --color-clay-light: var(--clay-light);
+  --color-amber: var(--amber);
+  --color-bark: var(--bark);
+  --color-bark-light: var(--bark-light);
+  --color-bark-deep: var(--bark-deep);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-light: var(--charcoal-light);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+  --color-error: var(--error);
+  --color-error-light: var(--error-light);
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
 }
 
 * {
@@ -99,6 +152,7 @@ body {
   color: var(--charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 300ms ease, color 300ms ease;
 }
 
 /* ── Organic Grain Overlay ── */
@@ -197,6 +251,9 @@ body {
 }
 .card-accent-amber {
   border-left: 3px solid var(--amber);
+}
+.card-accent-olive {
+  border-left: 3px solid var(--olive);
 }
 
 /* ── Active chip press effect ── */

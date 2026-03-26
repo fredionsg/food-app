@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Home, UtensilsCrossed, Search, FileDown, Settings, LogOut } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
+import { Home, UtensilsCrossed, Search, FileDown, Settings, LogOut, Sun, Moon } from 'lucide-react'
 import LeafLogo from './LeafLogo'
 
 const navItems = [
@@ -10,6 +11,23 @@ const navItems = [
   { to: '/export', icon: FileDown, label: 'Export' },
   { to: '/dietary-setup', icon: Settings, label: 'Diet' },
 ]
+
+function ThemeToggle({ className = '' }) {
+  const { dark, toggle } = useTheme()
+  return (
+    <button
+      onClick={toggle}
+      className={`option-bounce p-2 rounded-xl transition-all duration-200 cursor-pointer ${
+        dark
+          ? 'bg-amber/15 text-amber hover:bg-amber/25'
+          : 'bg-bark/5 text-bark-light hover:bg-bark/10'
+      } ${className}`}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+    </button>
+  )
+}
 
 export default function Layout() {
   const { user, logout } = useAuth()
@@ -21,9 +39,9 @@ export default function Layout() {
   }
 
   return (
-    <div className="grain min-h-screen bg-cream flex flex-col">
+    <div className="grain min-h-screen bg-cream flex flex-col transition-colors duration-300">
       {/* Desktop top bar */}
-      <header className="hidden md:flex items-center justify-between px-8 py-3.5 bg-parchment/60 backdrop-blur-md border-b border-sand/40">
+      <header className="hidden md:flex items-center justify-between px-8 py-3.5 bg-parchment/60 backdrop-blur-md border-b border-sand/40 transition-colors duration-300">
         <div className="flex items-center gap-2.5">
           <LeafLogo className="w-7 h-7" />
           <span className="font-serif text-xl font-semibold text-bark tracking-tight">can i eat that?</span>
@@ -46,7 +64,8 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-full bg-terracotta/15 flex items-center justify-center">
               <span className="text-xs font-semibold text-terracotta">{user?.first_name?.[0]}</span>
@@ -69,7 +88,7 @@ export default function Layout() {
       </main>
 
       {/* Mobile bottom tab bar */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-parchment/80 backdrop-blur-xl border-t border-sand/30 px-1 pb-[env(safe-area-inset-bottom)]">
+      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-parchment/80 backdrop-blur-xl border-t border-sand/30 px-1 pb-[env(safe-area-inset-bottom)] transition-colors duration-300">
         <div className="flex justify-around py-1.5">
           {navItems.map(({ to, icon: Icon, label }) => (
             <NavLink
@@ -90,6 +109,8 @@ export default function Layout() {
               )}
             </NavLink>
           ))}
+          {/* Mobile theme toggle as last nav item */}
+          <ThemeToggle className="self-center" />
         </div>
       </nav>
     </div>
