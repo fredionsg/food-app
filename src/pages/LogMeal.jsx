@@ -236,10 +236,10 @@ export default function LogMeal() {
     finally { setSaving(false) }
   }
 
-  // Single-select: pick and auto-advance
+  // Single-select: pick and show auto-advance bar
   const selectSingle = (field, value) => {
     set(field)(value)
-    setTimeout(goNext, 500)
+    setAutoAdvance(true)
   }
 
   // Multi-select: toggle and trigger auto-advance bar
@@ -424,7 +424,7 @@ export default function LogMeal() {
                     const selected = form.preparation_styles[0] === p
                     const suggested = suggestions.preps.includes(p)
                     return (
-                      <button key={p} type="button" onClick={() => { set('preparation_styles')([p]); setTimeout(goNext, 500) }}
+                      <button key={p} type="button" onClick={() => { set('preparation_styles')([p]); setAutoAdvance(true) }}
                         className={`option-bounce relative py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                           ${selected
                             ? 'bg-terracotta text-white border-terracotta shadow-md'
@@ -543,7 +543,7 @@ export default function LogMeal() {
       </div>
 
       {/* Auto-advance bar for multi-select steps */}
-      {autoAdvance && currentStepDef?.multi && (
+      {autoAdvance && (
         <AutoAdvanceBar onGo={goNext} onCancel={() => setAutoAdvance(false)} />
       )}
 
