@@ -187,14 +187,13 @@ export default function LogMeal() {
     }
   }, [step])
 
-  // Apply pre-selections when entering tap mode
+  // Default portion only
   useEffect(() => {
-    if (mode === 'tap' && !suggestionsApplied && form.meal_name.trim()) {
-      const s = getSuggestions(form.meal_name)
-      setForm((f) => ({ ...f, contexts: s.contexts, preparation_styles: s.preps, portion_size: 'regular' }))
+    if (mode === 'tap' && !suggestionsApplied) {
+      setForm((f) => ({ ...f, portion_size: 'regular' }))
       setSuggestionsApplied(true)
     }
-  }, [mode, suggestionsApplied, form.meal_name])
+  }, [mode, suggestionsApplied])
 
   const suggestions = getSuggestions(form.meal_name)
   const set = (field) => (value) => setForm((f) => ({ ...f, [field]: typeof value === 'function' ? value(f[field]) : value }))
@@ -385,17 +384,30 @@ export default function LogMeal() {
             {/* CONTEXT */}
             {currentStepDef?.id === 'context' && (
               <div>
-                <p className="text-xs text-stone-light mb-4">Pre-filled for "{form.meal_name}" — tap to adjust</p>
                 <div className="grid grid-cols-2 gap-2.5">
-                  {ALL_CONTEXTS.map((c) => (
-                    <button key={c} type="button" onClick={() => toggleMulti('contexts', c)}
-                      className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
-                        ${form.contexts.includes(c)
-                          ? 'bg-terracotta text-white border-terracotta shadow-md'
-                          : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
-                      {c}
-                    </button>
-                  ))}
+                  {/* Suggested items first, then the rest */}
+                  {[...ALL_CONTEXTS].sort((a, b) => {
+                    const aS = suggestions.contexts.includes(a) ? 0 : 1
+                    const bS = suggestions.contexts.includes(b) ? 0 : 1
+                    return aS - bS
+                  }).map((c) => {
+                    const selected = form.contexts.includes(c)
+                    const suggested = suggestions.contexts.includes(c)
+                    return (
+                      <button key={c} type="button" onClick={() => toggleMulti('contexts', c)}
+                        className={`option-bounce relative py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
+                          ${selected
+                            ? 'bg-terracotta text-white border-terracotta shadow-md'
+                            : suggested
+                              ? 'bg-terracotta/5 text-bark border-terracotta/30 hover:border-terracotta'
+                              : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
+                        {c}
+                        {suggested && !selected && (
+                          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-terracotta/50" />
+                        )}
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -403,17 +415,29 @@ export default function LogMeal() {
             {/* PREP */}
             {currentStepDef?.id === 'prep' && (
               <div>
-                <p className="text-xs text-stone-light mb-4">Pre-filled for "{form.meal_name}" — tap to adjust</p>
                 <div className="grid grid-cols-2 gap-2.5">
-                  {ALL_PREP_STYLES.map((p) => (
-                    <button key={p} type="button" onClick={() => toggleMulti('preparation_styles', p)}
-                      className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
-                        ${form.preparation_styles.includes(p)
-                          ? 'bg-terracotta text-white border-terracotta shadow-md'
-                          : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
-                      {p}
-                    </button>
-                  ))}
+                  {[...ALL_PREP_STYLES].sort((a, b) => {
+                    const aS = suggestions.preps.includes(a) ? 0 : 1
+                    const bS = suggestions.preps.includes(b) ? 0 : 1
+                    return aS - bS
+                  }).map((p) => {
+                    const selected = form.preparation_styles.includes(p)
+                    const suggested = suggestions.preps.includes(p)
+                    return (
+                      <button key={p} type="button" onClick={() => toggleMulti('preparation_styles', p)}
+                        className={`option-bounce relative py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
+                          ${selected
+                            ? 'bg-terracotta text-white border-terracotta shadow-md'
+                            : suggested
+                              ? 'bg-terracotta/5 text-bark border-terracotta/30 hover:border-terracotta'
+                              : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
+                        {p}
+                        {suggested && !selected && (
+                          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-terracotta/50" />
+                        )}
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             )}
