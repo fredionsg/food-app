@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft, Sun, Moon } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 import LeafLogo from '../components/LeafLogo'
 import { OrganicBlob } from '../components/BotanicalAccent'
 
@@ -12,6 +13,7 @@ export default function Login() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { login } = useAuth()
+  const { dark, toggle } = useTheme()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -32,6 +34,13 @@ export default function Login() {
     <div className="grain min-h-screen bg-cream flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden">
       <OrganicBlob className="absolute -top-40 -right-40 w-[500px] h-[500px]" color="sage" />
       <OrganicBlob className="absolute -bottom-40 -left-40 w-[400px] h-[400px]" color="terracotta" />
+
+      {/* Theme toggle */}
+      <button onClick={toggle}
+        className={`absolute top-5 right-5 option-bounce p-2.5 rounded-xl transition-all duration-200 cursor-pointer ${dark ? 'bg-amber/15 text-amber hover:bg-amber/25' : 'bg-bark/5 text-bark-light hover:bg-bark/10'}`}
+        aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+        {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      </button>
 
       <div className="relative w-full max-w-sm">
         <Link to="/" className="animate-fade-up inline-flex items-center gap-1.5 text-sm font-medium text-stone hover:text-terracotta transition-colors mb-10">
