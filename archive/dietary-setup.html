@@ -1,0 +1,98 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Dietary Setup - can i eat that?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="dietary.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="dietary-page">
+  <a class="back-link" href="home.html">&larr; Back to main menu</a>
+  <main class="dietary-panel" role="main">
+    <header class="dietary-header">
+      <p class="eyebrow">Setup</p>
+      <h1>Update your dietary profile</h1>
+      <p class="subtle">Review what we currently use to guide suggestions.</p>
+    </header>
+
+    <div class="form-feedback" role="alert" aria-live="polite"></div>
+
+    <section class="section card" aria-labelledby="quick-head">
+      <h2 id="quick-head">Quick choices</h2>
+      <p class="section-subtitle">Tap to toggle anything that describes your diet.</p>
+      <div class="chips" role="group" aria-label="Quick dietary options">
+        <button class="chip" type="button">Vegan</button>
+        <button class="chip" type="button">Halal</button>
+        <button class="chip" type="button">Kosher</button>
+        <button class="chip" type="button">Gluten-free</button>
+        <button class="chip" type="button">Low-FODMAP</button>
+        <button class="chip" type="button">Nut-free</button>
+        <button class="chip" type="button">Dairy-free</button>
+      </div>
+    </section>
+
+    <section class="section card" aria-labelledby="allergies-head">
+      <h2 id="allergies-head">Allergies</h2>
+      <div class="field" id="allergies-field" aria-describedby="allergies-help">
+        <input id="allergies-input" type="text" placeholder="Type to add (e.g., sesame, shrimp)" aria-label="Add allergy" />
+      </div>
+      <p class="help" id="allergies-help">Press Enter or comma to add. Click x to remove.</p>
+    </section>
+
+    <section class="section card" aria-labelledby="avoid-head">
+      <h2 id="avoid-head">Foods to avoid</h2>
+      <div class="field" id="avoid-field" aria-describedby="avoid-help">
+        <input id="avoid-input" type="text" placeholder="Type to add (e.g., onion, peanuts)" aria-label="Add food to avoid" />
+      </div>
+      <p class="help" id="avoid-help">Press Enter or comma to add. Click x to remove.</p>
+    </section>
+
+    <section class="section card" aria-labelledby="pref-head">
+      <h2 id="pref-head">Preferred or safe foods</h2>
+      <div class="field" id="pref-field" aria-describedby="pref-help">
+        <input id="pref-input" type="text" placeholder="Type to add (e.g., rice, tofu)" aria-label="Add preferred food" />
+      </div>
+      <p class="help" id="pref-help">Press Enter or comma to add. Click x to remove.</p>
+    </section>
+
+    <section class="section card" aria-labelledby="spice-head">
+      <h2 id="spice-head">Spice level</h2>
+      <div class="seg" role="group" aria-label="Spice level">
+        <button type="button">None</button>
+        <button type="button">Mild</button>
+        <button type="button">Medium</button>
+        <button type="button">Hot</button>
+      </div>
+      <p class="help">We avoid dishes above your tolerance.</p>
+    </section>
+
+    <section class="section card" aria-labelledby="notes-head">
+      <h2 id="notes-head">Anything special?</h2>
+      <textarea id="special-notes" placeholder="Optional notes about preparation, cross-contact, etc." aria-label="Special notes"></textarea>
+    </section>
+
+    <footer class="actions">
+      <a class="btn-secondary" href="home.html">Back to home</a>
+      <button class="btn-primary save-button" type="button">Save changes</button>
+    </footer>
+  </main>
+
+  <div class="modal" hidden>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-heading">
+      <header>
+        <h2 id="confirm-heading">Confirm updates</h2>
+        <p class="modal-subtle">Review what will change before saving.</p>
+      </header>
+      <ul class="changes-list"></ul>
+      <footer class="modal-actions">
+        <button class="btn-secondary modal-cancel" type="button">Keep editing</button>
+        <button class="btn-primary modal-confirm" type="button">Confirm &amp; save</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="dietary.js"></script>
+</body>
+</html>

@@ -1,0 +1,1138 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Log a meal - can i eat that?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <main class="logmeal">
+    <a class="back-link" href="home.html">&larr; Back to main menu</a>
+    <header class="logmeal__intro">
+      <p class="eyebrow">Log a meal</p>
+      <h1>Capture what you just ate</h1>
+      <p class="subtitle">
+        We will pair this quick log with your dietary profile so you can spot patterns faster.
+      </p>
+      <button class="scan-btn" type="button" aria-live="polite">
+        <span aria-hidden="true">📷</span>
+        Scan meal with camera (coming soon)
+      </button>
+    </header>
+
+    <form class="meal-form">
+      <fieldset class="section section--basics">
+        <legend>Meal basics</legend>
+        <label>
+          Meal name
+          <input type="text" name="mealName" placeholder="e.g., Spicy lentil bowl" required />
+        </label>
+        <label>
+          Date &amp; time
+          <input type="datetime-local" name="mealTime" id="meal-time" required />
+        </label>
+        <details class="multi-select" data-label="Location or context" data-empty-text="Add selections">
+          <summary>
+            <span>Location or context</span>
+            <span class="multi-select__status">Add selections</span>
+          </summary>
+          <div class="choice-options" role="group" aria-label="Select all contexts that apply">
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Home-cooked" />
+              <span>Home-cooked</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Takeout / delivery" />
+              <span>Takeout / delivery</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Restaurant" />
+              <span>Restaurant</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Fast casual" />
+              <span>Fast casual</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Cafe / bakery" />
+              <span>Cafe / bakery</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Work or school cafe" />
+              <span>Work / school cafe</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Street food / market" />
+              <span>Street food / market</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Travel (flight / train)" />
+              <span>Travel (flight / train)</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Potluck / event" />
+              <span>Potluck / event</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="context" value="Other" />
+              <span>Other</span>
+            </label>
+          </div>
+        </details>
+        <details class="multi-select" data-label="Preparation style" data-empty-text="Add selections">
+          <summary>
+            <span>Preparation style</span>
+            <span class="multi-select__status">Add selections</span>
+          </summary>
+          <div class="choice-options" role="group" aria-label="Select one or more preparation styles">
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Boiled" />
+              <span>Boiled</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Baked" />
+              <span>Baked</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Stir-fried" />
+              <span>Stir-fried</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Deep fried" />
+              <span>Deep fried</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Grilled" />
+              <span>Grilled</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Steamed" />
+              <span>Steamed</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="preparationStyle" value="Raw / Fresh" />
+              <span>Raw / fresh</span>
+            </label>
+          </div>
+        </details>
+        <details class="multi-select" data-label="Possible triggers" data-empty-text="Add triggers" data-empty-state="No triggers saved" data-wait-for="triggers">
+          <summary>
+            <span>Possible triggers</span>
+            <span class="multi-select__status">Loading…</span>
+          </summary>
+          <div class="choice-options" id="trigger-options" aria-live="polite">
+            <p class="text-muted small">Loading your saved triggers...</p>
+          </div>
+          <div class="trigger-add-toggle-wrap">
+            <button type="button" class="trigger-add-toggle" id="trigger-toggle" aria-pressed="false">
+              Add a new trigger to your profile
+            </button>
+          </div>
+          <div class="trigger-add-inline" data-toggle-target>
+            <form id="new-trigger-form" class="trigger-add__form">
+              <label class="sr-only" for="new-trigger-input">Trigger name</label>
+              <input id="new-trigger-input" type="text" placeholder="e.g., sesame oil" autocomplete="off" />
+              <div class="binary-field">
+                <span class="binary-field__label">Treat this as</span>
+                <label class="binary-chip">
+                  <input type="radio" name="triggerType" value="allergy" checked />
+                  <span>Allergy</span>
+                </label>
+                <label class="binary-chip">
+                  <input type="radio" name="triggerType" value="avoid" />
+                  <span>Avoid</span>
+                </label>
+                <button type="submit" class="btn-primary btn-primary--small binary-field__button">Add trigger</button>
+              </div>
+              <div class="trigger-add__actions">
+                <p class="trigger-add__status text-muted small" aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
+        </details>
+        <details class="multi-select" data-label="Meds or supports taken" data-empty-text="Add supports">
+          <summary>
+            <span>Meds or supports taken</span>
+            <span class="multi-select__status">Add selections</span>
+          </summary>
+          <div class="choice-options" role="group" aria-label="Select the supports used">
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Digestive enzymes" />
+              <span>Digestive enzymes</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Antihistamine" />
+              <span>Antihistamine</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Peppermint tea" />
+              <span>Peppermint tea</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Ginger" />
+              <span>Ginger</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Probiotic" />
+              <span>Probiotic</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Electrolyte drink" />
+              <span>Electrolyte drink</span>
+            </label>
+            <label class="checkbox-pill">
+              <input type="checkbox" name="supports" value="Breathing / relaxation" />
+              <span>Breathing / relaxation</span>
+            </label>
+          </div>
+        </details>
+      </fieldset>
+
+      <fieldset class="section section--portion portion-scale">
+        <legend>Portion size</legend>
+        <p class="hint">Pick the option that best matches how much you ate.</p>
+        <div class="portion-cards" role="group" aria-label="Portion size scale">
+          <label class="portion portion--tiny">
+            <input type="radio" name="portionSize" value="nibbles" />
+            <span class="portion__content">
+              <span class="portion__title">Nibbles</span>
+              <span class="portion__desc">A taste or two.</span>
+            </span>
+          </label>
+          <label class="portion portion--small">
+            <input type="radio" name="portionSize" value="light bite" />
+            <span class="portion__content">
+              <span class="portion__title">Light bite</span>
+              <span class="portion__desc">Half plate / side.</span>
+            </span>
+          </label>
+          <label class="portion portion--medium">
+            <input type="radio" name="portionSize" value="regular meal" />
+            <span class="portion__content">
+              <span class="portion__title">Regular meal</span>
+              <span class="portion__desc">Typical single serving.</span>
+            </span>
+          </label>
+          <label class="portion portion--large">
+            <input type="radio" name="portionSize" value="hearty serving" />
+            <span class="portion__content">
+              <span class="portion__title">Hearty serving</span>
+              <span class="portion__desc">Large plate or +1 extras.</span>
+            </span>
+          </label>
+          <label class="portion portion--feast">
+            <input type="radio" name="portionSize" value="large meal" />
+            <span class="portion__content">
+              <span class="portion__title">Large meal</span>
+              <span class="portion__desc">Multiple courses / feast.</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="section section--reaction reaction">
+        <legend>Immediate physical reaction</legend>
+        <p class="hint">Tap the face that matches how you feel right after eating.</p>
+        <div class="faces" role="group" aria-label="Immediate reaction rating">
+          <label class="face face--awful">
+            <input type="radio" name="reaction" value="awful" />
+            <span class="face__content">
+              <span class="face__icon" aria-hidden="true">😫</span>
+              <span class="face__label">Awful</span>
+            </span>
+          </label>
+          <label class="face face--meh">
+            <input type="radio" name="reaction" value="meh" />
+            <span class="face__content">
+              <span class="face__icon" aria-hidden="true">😕</span>
+              <span class="face__label">Uneasy</span>
+            </span>
+          </label>
+          <label class="face face--neutral">
+            <input type="radio" name="reaction" value="neutral" />
+            <span class="face__content">
+              <span class="face__icon" aria-hidden="true">😐</span>
+              <span class="face__label">Neutral</span>
+            </span>
+          </label>
+          <label class="face face--good">
+            <input type="radio" name="reaction" value="good" />
+            <span class="face__content">
+              <span class="face__icon" aria-hidden="true">🙂</span>
+              <span class="face__label">Comfortable</span>
+            </span>
+          </label>
+          <label class="face face--great">
+            <input type="radio" name="reaction" value="great" />
+            <span class="face__content">
+              <span class="face__icon" aria-hidden="true">😄</span>
+              <span class="face__label">Energized</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+      <label>
+        Additional notes
+        <textarea name="notes" rows="3" placeholder="Any symptoms, cravings, or future reminders."></textarea>
+      </label>
+
+      <button class="btn-primary" type="submit">Save meal entry</button>
+      <p class="meal-status text-muted" aria-live="polite"></p>
+    </form>
+  </main>
+  <div class="toast" role="status" aria-live="polite" hidden>
+    <span class="toast__icon" aria-hidden="true">✔</span>
+    <span class="toast__text">Meal successfully logged.</span>
+  </div>
+
+  <style>
+    .logmeal {
+      width: min(960px, 100%);
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 64px);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .logmeal__intro {
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.35), rgba(15, 27, 52, 0.9));
+      padding: clamp(24px, 4vw, 40px);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      box-shadow: var(--shadow-md);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0 0 0.35rem;
+    }
+
+    .logmeal__intro h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+    }
+
+    .logmeal__intro .subtitle {
+      margin: 0 0 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .scan-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.4rem;
+      border-radius: var(--radius-sm);
+      border: 1px dashed rgba(59, 130, 246, 0.6);
+      background: linear-gradient(120deg, rgba(14, 165, 233, 0.2), rgba(37, 99, 235, 0.2));
+      color: #cfe4ff;
+      font-weight: 600;
+      cursor: not-allowed;
+    }
+
+    .meal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: clamp(20px, 4vw, 40px);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(145deg, rgba(10, 15, 30, 0.95), rgba(8, 13, 28, 0.85));
+      box-shadow: var(--shadow-lg);
+    }
+
+    fieldset {
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      background: rgba(8, 13, 28, 0.7);
+      backdrop-filter: blur(6px);
+      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.4);
+    }
+
+    legend {
+      padding: 0 0.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+      text-transform: capitalize;
+    }
+
+    .section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section--basics {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(59, 130, 246, 0.25));
+      border-color: rgba(56, 189, 248, 0.55);
+      box-shadow: 0 20px 45px rgba(14, 165, 233, 0.18);
+    }
+
+    .section--portion {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(59, 130, 246, 0.15));
+      border-color: rgba(16, 185, 129, 0.55);
+      box-shadow: 0 20px 45px rgba(16, 185, 129, 0.18);
+    }
+
+    .section--reaction {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(129, 140, 248, 0.25));
+      border-color: rgba(236, 72, 153, 0.55);
+      box-shadow: 0 20px 45px rgba(236, 72, 153, 0.2);
+    }
+
+    .choice-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      grid-column: 1 / -1;
+    }
+
+    .choice-label {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .choice-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .multi-select {
+      grid-column: 1 / -1;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: var(--radius-md);
+      background: rgba(6, 9, 18, 0.7);
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .multi-select[open] {
+      border-color: var(--accent);
+      background: rgba(9, 14, 30, 0.9);
+      box-shadow: 0 18px 32px rgba(7, 12, 26, 0.25);
+    }
+
+    .multi-select summary {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      padding: 0.85rem 1.1rem;
+      font-weight: 600;
+    }
+
+    .multi-select summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .multi-select__status {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .multi-select[open] .multi-select__status {
+      color: var(--text-secondary);
+    }
+
+    .multi-select .choice-options {
+      padding: 0 1.1rem 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    .trigger-add-toggle-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 0.85rem 1.1rem 1.5rem;
+    }
+
+    .trigger-add-toggle {
+      border: 2px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.4rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: rgba(219, 68, 55, 0.18);
+      color: #fca5a5;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      justify-content: center;
+      opacity: 0.95;
+    }
+
+    .trigger-add-toggle:hover {
+      border-color: rgba(252, 165, 165, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .trigger-add-toggle.is-active {
+      border-color: #f87171;
+      color: #fff;
+      background: rgba(239, 68, 68, 0.22);
+      opacity: 0.8;
+    }
+
+    .trigger-add-toggle:focus-visible {
+      outline: 2px solid #fecaca;
+      outline-offset: 3px;
+    }
+
+    .trigger-add-inline {
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      margin: 0 1.1rem;
+      padding: 1rem 0 0.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .trigger-add__form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    #new-trigger-input {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-soft);
+      background: rgba(9, 9, 22, 0.85);
+      color: var(--text-primary);
+    }
+
+    .trigger-add__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .binary-field {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(7, 11, 25, 0.6);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.75rem;
+    }
+
+    .btn-primary--small {
+      padding: 0.65rem 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .binary-field__button {
+      margin-left: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .binary-field__label {
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-right: 0.25rem;
+    }
+
+    .binary-chip {
+      position: relative;
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      cursor: pointer;
+    }
+
+    .binary-chip input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    }
+
+    .binary-chip span {
+      pointer-events: none;
+    }
+
+    .binary-chip:has(input:checked) {
+      border-color: var(--accent);
+      background: rgba(156, 175, 136, 0.2);
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 560px) {
+      .binary-field {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .binary-field__button {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    .checkbox-pill {
+      position: relative;
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      border: 1px solid var(--border-soft);
+      background: rgba(6, 11, 24, 0.75);
+      color: var(--text-secondary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .checkbox-pill input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-pill span {
+      pointer-events: none;
+    }
+
+    .checkbox-pill:has(input:checked) {
+      border-color: var(--accent);
+      background: rgba(156, 175, 136, 0.22);
+      color: var(--text-primary);
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-soft);
+      background: rgba(4, 7, 15, 0.65);
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .hint {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .small {
+      font-size: 0.85rem;
+    }
+
+    .reaction {
+      display: block;
+    }
+
+    .reaction .faces {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .face {
+      position: relative;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .face__content {
+      border-radius: inherit;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      border: 2px solid transparent;
+      font-weight: 600;
+      text-align: center;
+      transition: transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .face input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .face__icon {
+      font-size: 1.9rem;
+    }
+
+    .face--awful {
+      background: rgba(219, 68, 55, 0.2);
+      color: #fca5a5;
+    }
+
+    .face--meh {
+      background: rgba(244, 180, 0, 0.18);
+      color: #fcd34d;
+    }
+
+    .face--neutral {
+      background: rgba(148, 163, 184, 0.2);
+      color: #cbd5f5;
+    }
+
+    .face--good {
+      background: rgba(52, 211, 153, 0.2);
+      color: #6ee7b7;
+    }
+
+    .face--great {
+      background: rgba(59, 130, 246, 0.2);
+      color: #bfdbfe;
+    }
+
+    .face input:checked + .face__content,
+    .face:hover .face__content {
+      border-color: currentColor;
+      transform: translateY(-2px);
+    }
+
+    .portion-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .portion-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .portion {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .portion__content {
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      border: 2px solid transparent;
+      background: rgba(148, 163, 184, 0.16);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .portion__title {
+      font-weight: 600;
+    }
+
+    .portion__desc {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .portion input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .portion input:checked + .portion__content,
+    .portion:hover .portion__content {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .portion--tiny .portion__content {
+      background: rgba(14, 165, 233, 0.2);
+    }
+
+    .portion--small .portion__content {
+      background: rgba(59, 130, 246, 0.18);
+    }
+
+    .portion--medium .portion__content {
+      background: rgba(16, 185, 129, 0.2);
+    }
+
+    .portion--large .portion__content {
+      background: rgba(251, 191, 36, 0.2);
+    }
+
+    .portion--feast .portion__content {
+      background: rgba(248, 113, 113, 0.2);
+    }
+
+    .btn-primary {
+      align-self: flex-start;
+    }
+
+    .meal-status {
+      margin: 0;
+      font-size: 0.95rem;
+      min-height: 1.2rem;
+    }
+
+    .meal-status.is-error {
+      color: #fca5a5;
+    }
+
+    .meal-status.is-success {
+      color: #6ee7b7;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      top: clamp(16px, 4vh, 32px);
+      transform: translate(-50%, -20px);
+      background: rgba(16, 185, 129, 0.95);
+      color: #03261a;
+      padding: 0.9rem 1.5rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 20px 40px rgba(4, 120, 87, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 200ms ease, transform 200ms ease;
+      z-index: 50;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast__icon {
+      background: rgba(255, 255, 255, 0.35);
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      fieldset {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script>
+    (() => {
+      const mealTime = document.getElementById('meal-time');
+      if (mealTime && !mealTime.value) {
+        const now = new Date();
+        const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+        mealTime.value = local.toISOString().slice(0, 16);
+      }
+
+      const API_BASE = (origin => {
+        try {
+          const url = new URL(origin);
+          return url.port === '3000' ? '' : 'http://localhost:3000';
+        } catch (_) {
+          return 'http://localhost:3000';
+        }
+      })(window.location.origin);
+
+      const triggerContainer = document.getElementById('trigger-options');
+      const newTriggerForm = document.getElementById('new-trigger-form');
+      const newTriggerInput = document.getElementById('new-trigger-input');
+      const newTriggerStatus = document.querySelector('.trigger-add__status');
+      const triggerToggle = document.getElementById('trigger-toggle');
+      const triggerInline = document.querySelector('[data-toggle-target]');
+      const mealForm = document.querySelector('.meal-form');
+      const mealStatus = document.querySelector('.meal-status');
+      const toast = document.querySelector('.toast');
+      let toastTimeout = null;
+      let activeProfileEmail = localStorage.getItem('userEmail') || '';
+      const setupMultiSelect = panel => {
+        const status = panel.querySelector('.multi-select__status');
+        if (!status) return;
+        const emptyText = panel.dataset.emptyText || 'Add selections';
+        const emptyState = panel.dataset.emptyState || emptyText;
+        const updateStatus = () => {
+          const inputs = panel.querySelectorAll('input[type="checkbox"]');
+          if (!inputs.length) {
+            status.textContent = emptyState;
+            return;
+          }
+          const selected = panel.querySelectorAll('input[type="checkbox"]:checked').length;
+          status.textContent = selected ? `${selected} selected` : emptyText;
+        };
+        panel.addEventListener('change', updateStatus);
+        panel.dataset.multiInit = 'true';
+        updateStatus();
+      };
+
+      const initMultiSelects = () => {
+        document.querySelectorAll('.multi-select').forEach(panel => {
+          if (panel.dataset.multiInit === 'true') return;
+          if (panel.dataset.waitFor && panel.dataset.waitFor !== 'ready') return;
+          setupMultiSelect(panel);
+        });
+      };
+
+      initMultiSelects();
+
+      if (triggerToggle && triggerInline) {
+        const setTriggerState = active => {
+          triggerInline.style.display = active ? 'flex' : 'none';
+          triggerToggle.setAttribute('aria-pressed', String(active));
+          triggerToggle.classList.toggle('is-active', active);
+        };
+        triggerToggle.addEventListener('click', () => {
+          const active = triggerToggle.classList.contains('is-active');
+          setTriggerState(!active);
+        });
+      }
+
+      const setMealStatus = (message, type = 'info') => {
+        if (!mealStatus) return;
+        mealStatus.textContent = message;
+        mealStatus.className = 'meal-status' + (type === 'success' ? ' is-success' : type === 'error' ? ' is-error' : '');
+      };
+
+      const ensureProfileEmail = async () => {
+        if (activeProfileEmail) return activeProfileEmail;
+        const stored = localStorage.getItem('userEmail');
+        if (stored) {
+          activeProfileEmail = stored;
+          return stored;
+        }
+        try {
+          const res = await fetch(`${API_BASE}/api/profile`);
+          if (!res.ok) return '';
+          const profile = await res.json();
+          if (profile?.email) {
+            activeProfileEmail = profile.email;
+            localStorage.setItem('userEmail', profile.email);
+            return profile.email;
+          }
+        } catch (err) {
+          console.error('Failed to fetch profile email.', err);
+        }
+        return '';
+      };
+
+      const getCheckedValues = name => {
+        if (!mealForm) return [];
+        return Array.from(mealForm.querySelectorAll(`input[name="${name}"]:checked`)).map(input => input.value);
+      };
+
+      const getRadioValue = name => {
+        return mealForm?.querySelector(`input[name="${name}"]:checked`)?.value || '';
+      };
+
+      const getFieldValue = selector => {
+        const field = mealForm?.querySelector(selector);
+        return field ? field.value.trim() : '';
+      };
+
+      if (triggerContainer) {
+        const showTriggerMessage = message => {
+          triggerContainer.innerHTML = '';
+          const p = document.createElement('p');
+          p.className = 'text-muted small';
+          p.textContent = message;
+          triggerContainer.appendChild(p);
+          const panel = triggerContainer.closest('.multi-select');
+          const status = panel?.querySelector('.multi-select__status');
+          if (status) status.textContent = message;
+        };
+
+        const createTriggerOption = value => {
+          const label = document.createElement('label');
+          label.className = 'checkbox-pill';
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.name = 'triggers';
+          input.value = value;
+          const span = document.createElement('span');
+          span.textContent = value;
+          label.append(input, span);
+          return label;
+        };
+
+        const updateTriggerPanel = () => {
+          const panel = triggerContainer.closest('.multi-select');
+          if (!panel) return;
+          panel.dataset.waitFor = 'ready';
+          if (panel.dataset.multiInit === 'true') {
+            panel.dispatchEvent(new Event('change', { bubbles: true }));
+          } else {
+            setupMultiSelect(panel);
+          }
+        };
+
+        const renderTriggers = triggers => {
+          triggerContainer.innerHTML = '';
+          triggers.forEach(trigger => {
+            triggerContainer.appendChild(createTriggerOption(trigger));
+          });
+          const triggerPanel = triggerContainer.closest('.multi-select');
+          if (triggerPanel) {
+            triggerPanel.dataset.waitFor = 'ready';
+            triggerPanel.dataset.multiInit = 'false';
+            setupMultiSelect(triggerPanel);
+          }
+        };
+
+        const loadTriggers = async () => {
+          showTriggerMessage('Loading your saved triggers...');
+          try {
+            const query = activeProfileEmail ? `?email=${encodeURIComponent(activeProfileEmail)}` : '';
+            const res = await fetch(`${API_BASE}/api/profile${query}`);
+            if (!res.ok) throw new Error('Request failed');
+            const profile = await res.json();
+            if (profile?.email) {
+              activeProfileEmail = profile.email;
+              localStorage.setItem('userEmail', profile.email);
+            }
+            const combined = [...(profile?.allergies || []), ...(profile?.avoid || [])];
+            const unique = [];
+            const seen = new Set();
+            combined.forEach(item => {
+              const clean = String(item || '').trim();
+              if (!clean) return;
+              const key = clean.toLowerCase();
+              if (seen.has(key)) return;
+              seen.add(key);
+              unique.push(clean);
+            });
+
+            if (!unique.length) {
+              showTriggerMessage('No saved allergies or avoid items yet. Complete setup to see suggestions.');
+              return;
+            }
+
+            renderTriggers(unique);
+          } catch (err) {
+            console.error(err);
+            showTriggerMessage('Unable to load triggers right now.');
+          }
+        };
+
+        loadTriggers();
+
+        newTriggerForm?.addEventListener('submit', event => {
+          event.preventDefault();
+          const value = newTriggerInput.value.trim();
+          if (!value) {
+            if (newTriggerStatus) newTriggerStatus.textContent = 'Enter a trigger name.';
+            return;
+          }
+          const exists = Array.from(triggerContainer.querySelectorAll('input[name="triggers"]')).some(input =>
+            input.value.toLowerCase() === value.toLowerCase()
+          );
+          if (exists) {
+            if (newTriggerStatus) newTriggerStatus.textContent = 'Already in your list.';
+            newTriggerInput.value = '';
+            return;
+          }
+
+          triggerContainer.appendChild(createTriggerOption(value));
+          updateTriggerPanel();
+          newTriggerInput.value = '';
+          if (newTriggerStatus) {
+            newTriggerStatus.textContent = 'Added!';
+            setTimeout(() => {
+              if (newTriggerStatus.textContent === 'Added!') newTriggerStatus.textContent = '';
+            }, 3000);
+          }
+        });
+      }
+
+      mealForm?.addEventListener('submit', async event => {
+        event.preventDefault();
+        setMealStatus('');
+        const email = await ensureProfileEmail();
+
+        const payload = {
+          email,
+          mealName: getFieldValue('input[name="mealName"]'),
+          mealTime: getFieldValue('input[name="mealTime"]'),
+          contexts: getCheckedValues('context'),
+          preparationStyles: getCheckedValues('preparationStyle'),
+          triggers: getCheckedValues('triggers'),
+          supports: getCheckedValues('supports'),
+          portionSize: getRadioValue('portionSize'),
+          reaction: getRadioValue('reaction'),
+          notes: getFieldValue('textarea[name="notes"]')
+        };
+
+        try {
+          setMealStatus('Saving meal...', 'info');
+            const res = await fetch(`${API_BASE}/api/meals`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            const message = body.errors?.join(' ') || body.error || 'Could not log your meal. Try again.';
+            setMealStatus(message, 'error');
+            return;
+          }
+
+          mealForm.reset();
+          document.querySelectorAll('.multi-select').forEach(panel => panel.dispatchEvent(new Event('change', { bubbles: true })));
+          if (triggerInline && triggerToggle?.classList.contains('is-active')) {
+            triggerInline.style.display = 'none';
+            triggerToggle.classList.remove('is-active');
+            triggerToggle.setAttribute('aria-pressed', 'false');
+          }
+          setMealStatus('Meal logged successfully.', 'success');
+          if (toast) {
+            toast.hidden = false;
+            toast.classList.add('is-visible');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+              toast.classList.remove('is-visible');
+              toastTimeout = setTimeout(() => {
+                toast.hidden = true;
+                window.location.href = 'home.html';
+              }, 200);
+            }, 1800);
+          } else {
+            window.location.href = 'home.html';
+          }
+        } catch (err) {
+          console.error(err);
+          setMealStatus('Unable to reach the server. Ensure it is running and try again.', 'error');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

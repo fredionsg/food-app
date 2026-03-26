@@ -1,0 +1,527 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Setup - can i eat that?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="setup.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="setup-page">
+  <main class="setup-panel" role="main">
+    <header class="setup-header">
+      <p class="eyebrow">Setup</p>
+      <h1>Complete your profile</h1>
+      <p class="subtle">
+        <span data-step-indicator>Step 1 of 2</span>
+        <span aria-hidden="true">&middot;</span>
+        <span data-step-name>Personal details</span>
+      </p>
+    </header>
+
+    <div class="form-feedback" role="alert" aria-live="polite"></div>
+
+    <div class="step step-personal is-active" data-step-name="Personal details">
+      <section class="section card" aria-labelledby="personal-head">
+        <h2 id="personal-head">Personal information</h2>
+        <p class="section-subtitle">Let us know about yourself so we can tailor the experience to your specific needs.</p>
+        <div class="info-bubble" role="note">
+          Your personal setup powers a shareable dietary information document you can hand to event managers or anyone who needs to know your preferences.
+        </div>
+        <div class="form-grid">
+          <label class="form-field" for="first-name">
+            <span class="form-label">First name</span>
+            <input id="first-name" name="first-name" type="text" autocomplete="given-name" placeholder="e.g., Jack" required />
+          </label>
+          <label class="form-field" for="last-name">
+            <span class="form-label">Last name</span>
+            <input id="last-name" name="last-name" type="text" autocomplete="family-name" placeholder="e.g., Lane" required />
+          </label>
+          <label class="form-field full" for="email">
+            <span class="form-label">Email address</span>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+          </label>
+          <label class="form-field full" for="password">
+            <span class="form-label">Password</span>
+            <input id="password" name="password" type="password" autocomplete="new-password" placeholder="At least 10 characters with numbers and symbols" required />
+            <p class="help">Minimum 10 characters, must include at least one number and one symbol.</p>
+          </label>
+          <label class="form-field" for="dob">
+            <span class="form-label">Date of birth</span>
+            <input id="dob" name="dob" type="date" autocomplete="bday" required />
+          </label>
+          <label class="form-field" for="country">
+            <span class="form-label">Country / region</span>
+            <select id="country" name="country" autocomplete="country" required>
+              <option value="" selected disabled>Select your country</option>
+              <option>Australia</option>
+              <option>Canada</option>
+              <option>New Zealand</option>
+              <option>Singapore</option>
+              <option>United Kingdom</option>
+              <option>United States</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="section card" aria-labelledby="medical-head">
+        <h2 id="medical-head">Medical advisories</h2>
+        <p class="section-subtitle">Optional: note any medical considerations that affect your diet.</p>
+        <label class="form-field full" for="medical-notes">
+          <span class="form-label">Health notes</span>
+          <textarea id="medical-notes" name="medical-notes" rows="4" placeholder="Examples: Diabetes (type 2), pregnancy (2nd trimester), low-sodium only."></textarea>
+        </label>
+      </section>
+
+      <footer class="actions">
+        <button class="btn-primary next-step" type="button">Continue to dietary setup</button>
+        <a class="link" href="index.html" role="button">Cancel setup</a>
+      </footer>
+    </div>
+
+    <div class="step step-dietary" data-step-name="Dietary preferences" hidden>
+      <section class="section card" aria-labelledby="quick-head">
+        <h2 id="quick-head">Quick choices</h2>
+        <p class="section-subtitle">Tap what already fits you.</p>
+        <div class="chips" role="group" aria-label="Quick dietary options">
+          <button class="chip" type="button" aria-pressed="true">Vegan</button>
+          <button class="chip" type="button">Halal</button>
+          <button class="chip" type="button">Kosher</button>
+          <button class="chip" type="button">Gluten-free</button>
+          <button class="chip" type="button">Low-FODMAP</button>
+          <button class="chip" type="button">Nut-free</button>
+          <button class="chip" type="button">Dairy-free</button>
+        </div>
+        <p class="help">You can change these anytime.</p>
+      </section>
+
+      <section class="section card" aria-labelledby="allergies-head">
+        <h2 id="allergies-head">Allergies</h2>
+        <div class="field" id="allergies-field" aria-describedby="allergies-help">
+          <input id="allergies-input" type="text" placeholder="Type to add (e.g., shellfish, sesame)" aria-label="Add allergy" />
+        </div>
+        <p class="help" id="allergies-help">Press Enter or comma to add. Click x to remove.</p>
+      </section>
+
+      <section class="section card" aria-labelledby="avoid-head">
+        <h2 id="avoid-head">Foods to avoid</h2>
+        <div class="field" id="avoid-field" aria-describedby="avoid-help">
+          <input id="avoid-input" type="text" placeholder="Type to add (e.g., onion, peanuts)" aria-label="Add food to avoid" />
+        </div>
+        <p class="help" id="avoid-help">Press Enter or comma to add. Click x to remove.</p>
+      </section>
+
+      <section class="section card" aria-labelledby="pref-head">
+        <h2 id="pref-head">Preferred or safe foods</h2>
+        <div class="field" id="pref-field" aria-describedby="pref-help">
+          <input id="pref-input" type="text" placeholder="Type to add (e.g., rice, tofu)" aria-label="Add preferred food" />
+        </div>
+        <p class="help" id="pref-help">Press Enter or comma to add. Click x to remove.</p>
+      </section>
+
+      <section class="section card" aria-labelledby="spice-head">
+        <h2 id="spice-head">Spice level</h2>
+        <div class="seg" role="group" aria-label="Spice level">
+          <button type="button" aria-pressed="false">None</button>
+          <button type="button" aria-pressed="true">Mild</button>
+          <button type="button" aria-pressed="false">Medium</button>
+          <button type="button" aria-pressed="false">Hot</button>
+        </div>
+        <p class="help">We will avoid dishes above your tolerance.</p>
+      </section>
+
+      <section class="section card" aria-labelledby="notes-head">
+        <h2 id="notes-head">Anything special?</h2>
+        <textarea
+          id="special-notes"
+          placeholder="Examples:&#10;- Low-FODMAP but sourdough bread is okay.&#10;- No onion or garlic except powder in small amounts.&#10;- Cross-contact with peanuts not ok."
+          aria-label="Special notes"></textarea>
+      </section>
+
+      <footer class="actions">
+        <button class="btn-secondary prev-step" type="button">Back to personal details</button>
+        <button class="btn-primary save-profile" type="button">Save &amp; Continue</button>
+        <a class="link" href="index.html" role="button">Go to start page</a>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    const steps = Array.from(document.querySelectorAll('.step'));
+    const indicator = document.querySelector('[data-step-indicator]');
+    const stepName = document.querySelector('[data-step-name]');
+    const formFeedback = document.querySelector('.form-feedback');
+    let currentStep = 0;
+
+    const showFormFeedback = (message, type = 'error') => {
+      if (!formFeedback) return;
+      formFeedback.textContent = message;
+      formFeedback.className = `form-feedback is-${type}`;
+    };
+
+    const clearFormFeedback = () => {
+      if (!formFeedback) return;
+      formFeedback.textContent = '';
+      formFeedback.className = 'form-feedback';
+    };
+
+    const clearErrors = container => {
+      container.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
+      container.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
+      container.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+      container.querySelectorAll('.field-error-text').forEach(el => el.remove());
+    };
+
+    const addErrorText = (container, message) => {
+      const existing = container.querySelector('.field-error-text');
+      if (existing) {
+        existing.textContent = message;
+        return existing;
+      }
+      const error = document.createElement('p');
+      error.className = 'field-error-text';
+      error.textContent = message;
+      container.appendChild(error);
+      return error;
+    };
+
+    const markInputError = (input, message) => {
+      const field = input.closest('.form-field');
+      if (field) {
+        field.classList.add('has-error');
+        input.setAttribute('aria-invalid', 'true');
+        addErrorText(field, message);
+      }
+    };
+
+    const markFieldGroupError = (element, message) => {
+      if (!element) return;
+      element.classList.add('field-error');
+      addErrorText(element.parentElement || element, message);
+    };
+
+    const showStep = index => {
+      steps.forEach((step, i) => {
+        const isActive = i === index;
+        step.classList.toggle('is-active', isActive);
+        step.toggleAttribute('hidden', !isActive);
+        if (isActive) {
+          clearErrors(step);
+        }
+      });
+
+      if (indicator) {
+        indicator.textContent = `Step ${index + 1} of ${steps.length}`;
+      }
+      if (stepName && steps[index]) {
+        stepName.textContent = steps[index].dataset.stepName || '';
+      }
+      currentStep = index;
+      clearFormFeedback();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const tokenControllers = {};
+
+    function setupTokenField(fieldId, inputId) {
+      const field = document.getElementById(fieldId);
+      const input = document.getElementById(inputId);
+      if (!field || !input) return null;
+
+      const getTokens = () => Array.from(field.querySelectorAll('.token span')).map(span => span.textContent.trim());
+
+      const clearTokens = () => {
+        field.querySelectorAll('.token').forEach(token => token.remove());
+      };
+
+      const addToken = text => {
+        const value = (text || '').trim().replace(/[,]+$/, '');
+        if (!value) return;
+        const exists = getTokens().some(t => t.toLowerCase() === value.toLowerCase());
+        if (exists) return;
+
+        const token = document.createElement('span');
+        token.className = 'token';
+        const label = document.createElement('span');
+        label.textContent = value;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-label', 'Remove ' + value);
+        button.textContent = 'x';
+        button.addEventListener('click', () => token.remove());
+        token.append(label, button);
+        field.insertBefore(token, input);
+      };
+
+      input.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ',') {
+          event.preventDefault();
+          addToken(input.value);
+          input.value = '';
+        } else if (event.key === 'Backspace' && !input.value) {
+          const last = field.querySelector('.token:last-of-type');
+          if (last) last.remove();
+        }
+      });
+
+      input.addEventListener('paste', event => {
+        const text = (event.clipboardData || window.clipboardData).getData('text');
+        if (text && text.includes(',')) {
+          event.preventDefault();
+          text.split(',').forEach(item => addToken(item));
+          input.value = '';
+        }
+      });
+
+      return { field, input, addToken, clearTokens, getTokens };
+    }
+
+    tokenControllers.allergies = setupTokenField('allergies-field', 'allergies-input');
+    tokenControllers.avoid = setupTokenField('avoid-field', 'avoid-input');
+    tokenControllers.preferred = setupTokenField('pref-field', 'pref-input');
+
+    const validatePersonalStep = (showErrors = false) => {
+      const stepEl = document.querySelector('.step-personal');
+      if (showErrors) clearErrors(stepEl);
+      const data = {
+        firstName: document.getElementById('first-name').value.trim(),
+        lastName: document.getElementById('last-name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        dob: document.getElementById('dob').value,
+        country: document.getElementById('country').value,
+        medicalNotes: document.getElementById('medical-notes').value.trim()
+      };
+
+      const errors = [];
+      if (!data.firstName) {
+        errors.push('First name is required.');
+        if (showErrors) markInputError(document.getElementById('first-name'), 'Please enter your first name.');
+      }
+      if (!data.lastName) {
+        errors.push('Last name is required.');
+        if (showErrors) markInputError(document.getElementById('last-name'), 'Please enter your last name.');
+      }
+      if (!data.email) {
+        errors.push('Email is required.');
+        if (showErrors) markInputError(document.getElementById('email'), 'Please enter your email.');
+      } else if (!/^\S+@\S+\.\S+$/.test(data.email)) {
+        errors.push('Provide a valid email.');
+        if (showErrors) markInputError(document.getElementById('email'), 'Please provide a valid email address.');
+      }
+      if (!data.password) {
+        errors.push('Password is required.');
+        if (showErrors) markInputError(document.getElementById('password'), 'Please enter a password.');
+      } else {
+        const pass = data.password;
+        const hasNumber = /\d/.test(pass);
+        const hasSymbol = /[^A-Za-z0-9]/.test(pass);
+        if (pass.length < 10 || !hasNumber || !hasSymbol) {
+          errors.push('Password must be at least 10 characters and include a number and a symbol.');
+          if (showErrors) markInputError(document.getElementById('password'), 'At least 10 chars with a number and symbol.');
+        }
+      }
+      if (!data.dob) {
+        errors.push('Date of birth is required.');
+        if (showErrors) markInputError(document.getElementById('dob'), 'Please select your date of birth.');
+      }
+      if (!data.country) {
+        errors.push('Country is required.');
+        if (showErrors) markInputError(document.getElementById('country'), 'Please choose your country.');
+      }
+
+      if (errors.length && showErrors) {
+        showFormFeedback('Please complete the highlighted personal information fields.', 'error');
+      }
+
+      return { valid: errors.length === 0, data };
+    };
+
+    const getSelectedChips = () => Array.from(document.querySelectorAll('.chip[aria-pressed="true"]')).map(chip => chip.textContent.trim());
+
+    const getSpiceLevel = () => {
+      const selected = document.querySelector('.seg button[aria-pressed="true"]');
+      return selected ? selected.textContent.trim() : '';
+    };
+
+    const validateDietaryStep = (showErrors = false) => {
+      const stepEl = document.querySelector('.step-dietary');
+      if (showErrors) clearErrors(stepEl);
+
+      const quickChoices = getSelectedChips();
+      const allergies = tokenControllers.allergies?.getTokens() || [];
+      const avoid = tokenControllers.avoid?.getTokens() || [];
+      const preferred = tokenControllers.preferred?.getTokens() || [];
+      const spiceLevel = getSpiceLevel();
+      const specialNotes = document.getElementById('special-notes').value.trim();
+
+      const errors = [];
+      if (quickChoices.length === 0) {
+        errors.push('Select at least one quick choice.');
+        if (showErrors) markFieldGroupError(document.querySelector('.chips'), 'Select at least one quick choice.');
+      }
+      if (allergies.length === 0) {
+        errors.push('Add at least one allergy.');
+        if (showErrors && tokenControllers.allergies) markFieldGroupError(tokenControllers.allergies.field, 'Add at least one allergy.');
+      }
+      if (avoid.length === 0) {
+        errors.push('Add at least one food to avoid.');
+        if (showErrors && tokenControllers.avoid) markFieldGroupError(tokenControllers.avoid.field, 'Add at least one food to avoid.');
+      }
+      if (preferred.length === 0) {
+        errors.push('Add at least one preferred food.');
+        if (showErrors && tokenControllers.preferred) markFieldGroupError(tokenControllers.preferred.field, 'Add at least one preferred food.');
+      }
+      if (!spiceLevel) {
+        errors.push('Select a spice level.');
+        if (showErrors) markFieldGroupError(document.querySelector('.seg'), 'Select a spice level.');
+      }
+
+      if (errors.length && showErrors) {
+        showFormFeedback('Please finish the dietary preferences before saving.', 'error');
+      }
+
+      return {
+        valid: errors.length === 0,
+        data: { quickChoices, allergies, avoid, preferred, spiceLevel, specialNotes }
+      };
+    };
+
+    const populateForm = profile => {
+      if (!profile) return;
+      document.getElementById('first-name').value = profile.firstName || '';
+      document.getElementById('last-name').value = profile.lastName || '';
+      document.getElementById('email').value = profile.email || '';
+      document.getElementById('dob').value = profile.dob || '';
+      document.getElementById('country').value = profile.country || '';
+      document.getElementById('medical-notes').value = profile.medicalNotes || '';
+
+      const chosen = new Set((profile.quickChoices || []).map(choice => choice.toLowerCase()));
+      document.querySelectorAll('.chip').forEach(chip => {
+        const isSelected = chosen.has(chip.textContent.trim().toLowerCase());
+        chip.setAttribute('aria-pressed', String(isSelected));
+      });
+
+      tokenControllers.allergies?.clearTokens();
+      (profile.allergies || []).forEach(value => tokenControllers.allergies?.addToken(value));
+      tokenControllers.avoid?.clearTokens();
+      (profile.avoid || []).forEach(value => tokenControllers.avoid?.addToken(value));
+      tokenControllers.preferred?.clearTokens();
+      (profile.preferred || []).forEach(value => tokenControllers.preferred?.addToken(value));
+
+      document.querySelectorAll('.seg button').forEach(button => {
+        button.setAttribute('aria-pressed', String(button.textContent.trim() === profile.spiceLevel));
+      });
+
+      document.getElementById('special-notes').value = profile.specialNotes || '';
+    };
+
+    const saveProfile = async () => {
+      clearFormFeedback();
+      const dietaryCheck = validateDietaryStep(true);
+      const personalCheck = validatePersonalStep(false);
+
+      if (!personalCheck.valid) {
+        showStep(0);
+        validatePersonalStep(true);
+        showFormFeedback('Please complete your personal details first.', 'error');
+        return;
+      }
+      if (!dietaryCheck.valid) {
+        return;
+      }
+
+      const payload = {
+        ...personalCheck.data,
+        quickChoices: dietaryCheck.data.quickChoices,
+        allergies: dietaryCheck.data.allergies,
+        avoid: dietaryCheck.data.avoid,
+        preferred: dietaryCheck.data.preferred,
+        spiceLevel: dietaryCheck.data.spiceLevel,
+        specialNotes: dietaryCheck.data.specialNotes
+      };
+
+      try {
+        const response = await fetch('/api/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => ({}));
+          const message = errorBody.errors?.join(' ') || 'Could not save your profile. Please try again.';
+          showFormFeedback(message, 'error');
+          return;
+        }
+
+        localStorage.setItem('userEmail', payload.email);
+        showFormFeedback('Profile saved! Redirecting to home…', 'success');
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 1500);
+      } catch (err) {
+        console.error(err);
+        showFormFeedback('We could not reach the server. Make sure it is running and try again.', 'error');
+      }
+    };
+
+    document.querySelector('.next-step').addEventListener('click', () => {
+      const validation = validatePersonalStep(true);
+      if (!validation.valid) return;
+      showStep(1);
+    });
+
+    document.querySelector('.prev-step').addEventListener('click', () => {
+      showStep(0);
+    });
+
+    document.querySelector('.save-profile').addEventListener('click', saveProfile);
+
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const active = chip.getAttribute('aria-pressed') === 'true';
+        chip.setAttribute('aria-pressed', String(!active));
+      });
+    });
+
+    document.querySelectorAll('.seg').forEach(seg => {
+      seg.addEventListener('click', event => {
+        if (event.target.tagName !== 'BUTTON') return;
+        seg.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', 'false'));
+        event.target.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    const loadProfile = async () => {
+      try {
+        const storedEmail = localStorage.getItem('userEmail');
+        const query = storedEmail ? `?email=${encodeURIComponent(storedEmail)}` : '';
+        const response = await fetch(`/api/profile${query}`);
+        if (!response.ok) return;
+        const profile = await response.json();
+        if (profile) {
+          populateForm(profile);
+        }
+      } catch (err) {
+        console.warn('Profile preload failed', err);
+      }
+    };
+
+    loadProfile();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

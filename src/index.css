@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* ── Earthy Modern Palette ── */
+:root {
+  --sage: #5C6B4F;
+  --sage-light: #8A9A7B;
+  --sage-dark: #3D4A34;
+  --olive: #7C8C5E;
+  --sand: #D4C9B0;
+  --sand-light: #EDE8DB;
+  --sand-lighter: #F7F4ED;
+  --cream: #FDFBF7;
+  --terracotta: #C17952;
+  --terracotta-light: #E8A882;
+  --clay: #A0694B;
+  --bark: #5A3E2B;
+  --bark-light: #7D5F49;
+  --charcoal: #2E2E2E;
+  --charcoal-light: #4A4A4A;
+  --stone: #6B6B6B;
+  --stone-light: #9A9A9A;
+  --error: #C25450;
+  --error-light: #FDECEA;
+  --success: #5C6B4F;
+  --success-light: #EDF2E8;
+}
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --color-sage: #5C6B4F;
+  --color-sage-light: #8A9A7B;
+  --color-sage-dark: #3D4A34;
+  --color-olive: #7C8C5E;
+  --color-sand: #D4C9B0;
+  --color-sand-light: #EDE8DB;
+  --color-sand-lighter: #F7F4ED;
+  --color-cream: #FDFBF7;
+  --color-terracotta: #C17952;
+  --color-terracotta-light: #E8A882;
+  --color-clay: #A0694B;
+  --color-bark: #5A3E2B;
+  --color-bark-light: #7D5F49;
+  --color-charcoal: #2E2E2E;
+  --color-charcoal-light: #4A4A4A;
+  --color-stone: #6B6B6B;
+  --color-stone-light: #9A9A9A;
+  --color-error: #C25450;
+  --color-error-light: #FDECEA;
+  --color-success: #5C6B4F;
+  --color-success-light: #EDF2E8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: var(--cream);
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 3px; }
+
+/* ── Transitions ── */
+.page-enter { opacity: 0; transform: translateY(8px); }
+.page-enter-active {
+  opacity: 1; transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  padding: 0.75rem 1.5rem; border-radius: 12px;
+  font-size: 0.875rem; font-weight: 500;
+  z-index: 100; animation: toast-in 300ms ease;
+}
+.toast-success { background: var(--sage); color: white; }
+.toast-error { background: var(--error); color: white; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(1rem); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

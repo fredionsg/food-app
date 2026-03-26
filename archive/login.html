@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login - can i eat that?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="setup.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="setup-page">
+  <main class="setup-panel" role="main">
+    <header class="setup-header">
+      <nav>
+        <ul>
+          <li><a href="index.html">Back to Splash</a></li>
+          <li><a href="#" id="forgot-password">Forgot Password?</a></li>
+        </ul>
+      </nav>
+      <h1>Sign in</h1>
+      <p class="subtle">Use your email and password to load your dietary profile.</p>
+    </header>
+
+    <div class="form-feedback" role="alert" aria-live="polite"></div>
+
+    <div class="section card">
+      <div class="form-grid">
+        <label class="form-field full" for="login-email">
+          <span class="form-label">Email address</span>
+          <input id="login-email" type="email" autocomplete="email" placeholder="name@example.com" required />
+        </label>
+        <label class="form-field full" for="login-password">
+          <span class="form-label">Password</span>
+          <div class="field password-field">
+            <input id="login-password" type="password" autocomplete="current-password" required />
+            <button type="button" class="btn-secondary toggle-password" aria-pressed="false">Show</button>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <footer class="actions">
+      <button class="btn-primary" id="login-submit" type="button">Login</button>
+    </footer>
+  </main>
+
+  <script>
+    const feedback = document.querySelector('.form-feedback');
+    const emailInput = document.getElementById('login-email');
+    const passwordInput = document.getElementById('login-password');
+    const submitBtn = document.getElementById('login-submit');
+    const togglePassword = document.querySelector('.toggle-password');
+
+    const showFeedback = (message, type = 'error') => {
+      feedback.textContent = message;
+      feedback.className = `form-feedback is-${type}`;
+    };
+
+    const clearFeedback = () => {
+      feedback.textContent = '';
+      feedback.className = 'form-feedback';
+    };
+
+    submitBtn.addEventListener('click', async () => {
+      clearFeedback();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showFeedback('Please enter both email and password.', 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          const msg = body.error || 'Login failed. Please check your details.';
+          showFeedback(msg, 'error');
+          return;
+        }
+
+        const profile = await res.json();
+        localStorage.setItem('userEmail', profile.email);
+        showFeedback('Login successful! Redirecting…', 'success');
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 800);
+      } catch (err) {
+        console.error(err);
+        showFeedback('Could not reach the server. Make sure it is running.', 'error');
+      }
+    });
+
+    togglePassword?.addEventListener('click', () => {
+      const isShown = passwordInput.type === 'text';
+      passwordInput.type = isShown ? 'password' : 'text';
+      togglePassword.textContent = isShown ? 'Show' : 'Hide';
+      togglePassword.setAttribute('aria-pressed', String(!isShown));
+      passwordInput.focus();
+    });
+  </script>
+</body>
+</html>

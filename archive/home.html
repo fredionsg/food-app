@@ -1,0 +1,161 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Home - can i eat that?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="home-page">
+  <main class="home-panel" role="main">
+    <header class="home-header">
+      <p class="eyebrow">Overview</p>
+      <h1>Welcome back, <span id="home-first-name">Jack</span>!</h1>
+      <p class="subtle">Pick what you're doing today.</p>
+    </header>
+
+    <nav class="action-grid" aria-label="Diet manager actions">
+      <a class="action-tile action-log" href="logmeal.html">
+        <span class="label">Log a meal</span>
+        <span class="hint">Record what you just ate.</span>
+      </a>
+      <a class="action-tile action-check" href="checkmeal.html">
+        <span class="label">Check a meal</span>
+        <span class="hint">Scan for allergens or avoid items.</span>
+      </a>
+      <a class="action-tile action-export" href="#" id="export-dietary">
+        <span class="label">Export dietary information</span>
+        <span class="hint">Share your current preferences.</span>
+      </a>
+      <a class="action-tile action-setup" href="dietary-setup.html">
+        <span class="label">Dietary setup</span>
+        <span class="hint">Update your allergies and safe foods.</span>
+      </a>
+    </nav>
+
+    <section class="suggested-recipe" aria-labelledby="recipe-heading">
+      <div class="recipe-media">
+        <img src="pexels-momo-king-3616480-5409024.jpg" loading="lazy" alt="Pad Thai garnished with shaved vegetables and microgreens" />
+      </div>
+      <div class="recipe-content">
+        <header class="recipe-header">
+          <p class="eyebrow">Suggested recipe</p>
+          <h2 id="recipe-heading">Citrus Ginger Pad Thai</h2>
+          <p class="recipe-subtle">Tailored to your saved dietary preferences.</p>
+        </header>
+
+        <div class="ingredient-list" id="ingredientList" role="list">
+          <ul>
+            <li>200 g rice noodles</li>
+            <li>1 cup shredded carrots</li>
+            <li>1 cup bean sprouts</li>
+            <li>1 block firm tofu, pressed &amp; cubed</li>
+            <li>3 scallions, sliced</li>
+            <li>2 tbsp tamari</li>
+            <li>1 tbsp toasted sesame oil</li>
+            <li>2 tbsp lime juice</li>
+            <li>1 tbsp grated ginger</li>
+            <li>Fresh cilantro &amp; microgreens to garnish</li>
+            <li>Crushed roasted peanuts (optional)</li>
+          </ul>
+        </div>
+
+        <div class="recipe-actions">
+          <button class="btn-secondary copy-ingredients" type="button">Copy ingredient list</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.copy-ingredients').forEach(button => {
+      button.addEventListener('click', () => {
+        const target = document.querySelector('#ingredientList');
+        if (!target) return;
+
+        const items = Array.from(target.querySelectorAll('li'))
+          .map(item => `\u2022 ${item.textContent.trim()}`)
+          .join('\n');
+
+        const copyText = items || target.textContent.trim();
+        if (!copyText) return;
+
+        const originalLabel = 'Copy ingredient list';
+
+        const markCopied = () => {
+          button.classList.add('copied');
+          button.textContent = 'Copied!';
+          setTimeout(() => {
+            button.classList.remove('copied');
+            button.textContent = originalLabel;
+          }, 1600);
+        };
+
+        const fallbackCopy = text => {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', 'true');
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          try { document.execCommand('copy'); } finally { textarea.remove(); }
+        };
+
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(copyText)
+            .then(markCopied)
+            .catch(() => {
+              fallbackCopy(copyText);
+              markCopied();
+            });
+        } else {
+          fallbackCopy(copyText);
+          markCopied();
+        }
+      });
+    });
+  </script>
+
+  <script src="profile-utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const nameTarget = document.getElementById('home-first-name');
+      if (nameTarget) {
+        const storedEmail = localStorage.getItem('userEmail');
+        const query = storedEmail ? `?email=${encodeURIComponent(storedEmail)}` : '';
+        fetch(`/api/profile${query}`)
+          .then(res => (res.ok ? res.json() : null))
+          .then(profile => {
+            if (profile && profile.firstName) {
+              nameTarget.textContent = profile.firstName;
+            }
+          })
+          .catch(() => {
+            /* keep default */
+          });
+      }
+
+      const exportTile = document.getElementById('export-dietary');
+      if (exportTile) {
+        exportTile.addEventListener('click', event => {
+          event.preventDefault();
+          if (window.exportDietaryProfile) {
+            window.exportDietaryProfile();
+          }
+        });
+      }
+    });
+  </script>
+</body></html>
+
+
+
+
+
+
+
+
+
