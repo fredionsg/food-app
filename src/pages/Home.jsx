@@ -65,7 +65,7 @@ export default function Home() {
           <Link
             key={to}
             to={to}
-            className={`animate-fade-up stagger-${i + 1} group flex items-center gap-4 p-5 bg-white/70 backdrop-blur-sm rounded-2xl border border-sand/40 hover:border-terracotta/20 hover:shadow-[var(--shadow-lifted)] transition-all duration-300 ${accent}`}
+            className={`animate-fade-up stagger-${i + 1} group flex items-center gap-4 p-5 bg-surface-el backdrop-blur-sm rounded-2xl border border-sand/40 hover:border-terracotta/20 hover:shadow-[var(--shadow-lifted)] transition-all duration-300 ${accent}`}
           >
             <div className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center ${iconBg}`}>
               <Icon className={`w-5 h-5 ${iconColor}`} strokeWidth={1.8} />

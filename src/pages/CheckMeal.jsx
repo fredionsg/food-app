@@ -165,7 +165,7 @@ export default function CheckMeal() {
 
 function ResultGroup({ icon, label, items, chipClass }) {
   return (
-    <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-5 border border-sand/30">
+    <div className="bg-surface-el rounded-2xl p-5 border border-sand/30">
       <div className="flex items-center gap-2.5 mb-3">
         {icon}
         <span className="text-sm font-semibold text-bark">{label}</span>

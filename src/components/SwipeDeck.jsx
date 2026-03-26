@@ -128,7 +128,7 @@ export default function SwipeDeck({ cards, onComplete }) {
                 ${isFront ? 'cursor-grab active:cursor-grabbing z-30' : offset === 1 ? 'z-20' : 'z-10'}
                 ${isFront && swipeDirection === 'right' ? 'border-sage bg-sage/5' : ''}
                 ${isFront && swipeDirection === 'left' ? 'border-error/50 bg-error/5' : ''}
-                ${!swipeDirection || !isFront ? 'border-sand/50 bg-white/80 backdrop-blur-sm' : ''}`}
+                ${!swipeDirection || !isFront ? 'border-sand/50 bg-surface-el' : ''}`}
               style={{
                 transform: getTransform(offset),
                 opacity: getOpacity(offset),

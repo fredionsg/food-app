@@ -64,7 +64,7 @@ export default function Export() {
       </div>
 
       {/* Preview card */}
-      <div className="animate-fade-up stagger-1 bg-white/60 backdrop-blur-sm rounded-2xl border border-sand/40 p-6 mb-6 relative overflow-hidden">
+      <div className="animate-fade-up stagger-1 bg-surface-el rounded-2xl border border-sand/40 p-6 mb-6 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-terracotta via-sage to-amber" />
         <h2 className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-5 mt-1">Profile preview</h2>
         <div className="space-y-4">

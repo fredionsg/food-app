@@ -97,9 +97,9 @@
   --warning: #D4AA4A;
   --warning-light: #2E2610;
 
-  --surface: #211D17;
-  --surface-elevated: rgba(45, 38, 30, 0.8);
-  --surface-muted: rgba(45, 38, 30, 0.5);
+  --surface: #2A241C;
+  --surface-elevated: #302920;
+  --surface-muted: #262017;
 
   --grain-opacity: 0.04;
   --shadow-soft: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
@@ -233,6 +233,11 @@ body {
   content: ''; flex: 1; height: 1px;
   background: linear-gradient(90deg, transparent, var(--sand), transparent);
 }
+
+/* ── Surface utilities ── */
+.bg-surface { background-color: var(--surface); }
+.bg-surface-el { background-color: var(--surface-elevated); }
+.bg-surface-muted { background-color: var(--surface-muted); }
 
 /* ── Section backgrounds ── */
 .bg-warm-gradient {

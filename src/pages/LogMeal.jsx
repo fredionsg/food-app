@@ -333,7 +333,7 @@ export default function LogMeal() {
               <div className="space-y-4">
                 <input ref={inputRef} value={form.meal_name} onChange={(e) => set('meal_name')(e.target.value)}
                   onKeyDown={handleNameKeyDown}
-                  className="w-full px-5 py-5 bg-white/60 border-2 border-sand/50 rounded-2xl text-xl text-charcoal placeholder:text-stone-light focus:outline-none focus:border-terracotta-muted transition-all duration-200"
+                  className="w-full px-5 py-5 bg-surface-el border-2 border-sand/50 rounded-2xl text-xl text-charcoal placeholder:text-stone-light focus:outline-none focus:border-terracotta-muted transition-all duration-200"
                   placeholder="e.g. Chicken stir-fry" autoFocus />
                 <p className="text-xs text-stone-light text-center">Press Enter to continue</p>
               </div>
@@ -351,7 +351,7 @@ export default function LogMeal() {
                   <p className="relative text-center text-xs text-stone-light bg-cream px-3 mx-auto w-fit">or pick a time</p>
                 </div>
                 <input type="datetime-local" value={form.meal_time} onChange={(e) => set('meal_time')(e.target.value)}
-                  className="w-full px-5 py-5 bg-white/60 border-2 border-sand/50 rounded-2xl text-charcoal focus:outline-none focus:border-terracotta-muted transition-all duration-200" />
+                  className="w-full px-5 py-5 bg-surface-el border-2 border-sand/50 rounded-2xl text-charcoal focus:outline-none focus:border-terracotta-muted transition-all duration-200" />
               </div>
             )}
 
@@ -359,7 +359,7 @@ export default function LogMeal() {
             {currentStepDef?.id === 'mode' && (
               <div className="space-y-3">
                 <button type="button" onClick={() => selectMode('swipe')}
-                  className="option-bounce w-full flex items-center gap-4 p-6 bg-white/60 backdrop-blur-sm rounded-2xl border-2 border-sand/40 hover:border-terracotta/30 hover:shadow-md transition-all cursor-pointer text-left">
+                  className="option-bounce w-full flex items-center gap-4 p-6 bg-surface-el rounded-2xl border-2 border-sand/40 hover:border-terracotta/30 hover:shadow-md transition-all cursor-pointer text-left">
                   <div className="w-14 h-14 rounded-2xl bg-terracotta/10 flex items-center justify-center shrink-0">
                     <Layers className="w-7 h-7 text-terracotta" strokeWidth={1.8} />
                   </div>
@@ -369,7 +369,7 @@ export default function LogMeal() {
                   </div>
                 </button>
                 <button type="button" onClick={() => selectMode('tap')}
-                  className="option-bounce w-full flex items-center gap-4 p-6 bg-white/60 backdrop-blur-sm rounded-2xl border-2 border-sand/40 hover:border-sage/30 hover:shadow-md transition-all cursor-pointer text-left">
+                  className="option-bounce w-full flex items-center gap-4 p-6 bg-surface-el rounded-2xl border-2 border-sand/40 hover:border-sage/30 hover:shadow-md transition-all cursor-pointer text-left">
                   <div className="w-14 h-14 rounded-2xl bg-sage/10 flex items-center justify-center shrink-0">
                     <ListChecks className="w-7 h-7 text-sage" strokeWidth={1.8} />
                   </div>
@@ -400,7 +400,7 @@ export default function LogMeal() {
                             ? 'bg-terracotta text-white border-terracotta shadow-md'
                             : suggested
                               ? 'bg-terracotta/5 text-bark border-terracotta/30 hover:border-terracotta'
-                              : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
+                              : 'bg-surface-el text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                         {c}
                         {suggested && !selected && (
                           <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-terracotta/50" />
@@ -430,7 +430,7 @@ export default function LogMeal() {
                             ? 'bg-terracotta text-white border-terracotta shadow-md'
                             : suggested
                               ? 'bg-terracotta/5 text-bark border-terracotta/30 hover:border-terracotta'
-                              : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
+                              : 'bg-surface-el text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                         {p}
                         {suggested && !selected && (
                           <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-terracotta/50" />
@@ -452,7 +452,7 @@ export default function LogMeal() {
                       className={`option-bounce flex items-center gap-4 py-4 px-5 rounded-2xl transition-all duration-200 cursor-pointer border-2 text-left
                         ${active
                           ? 'bg-terracotta/10 border-terracotta'
-                          : 'bg-white/70 border-sand/40 hover:border-terracotta-muted'}`}>
+                          : 'bg-surface-el border-sand/40 hover:border-terracotta-muted'}`}>
                       <div className="flex gap-1 items-end h-5 shrink-0">
                         {[1, 2, 3, 4, 5].map((b) => (
                           <div key={b}
@@ -480,7 +480,7 @@ export default function LogMeal() {
                     className={`option-bounce flex items-center gap-3 py-4 px-5 rounded-2xl transition-all duration-200 cursor-pointer border-2 text-left
                       ${form.reaction === value
                         ? `${bg} ${ring} ring-2 border-transparent`
-                        : 'bg-white/70 border-sand/40 hover:border-terracotta-muted'}`}>
+                        : 'bg-surface-el border-sand/40 hover:border-terracotta-muted'}`}>
                     <Icon className={`w-7 h-7 shrink-0 ${form.reaction === value ? text : 'text-stone-light'}`}
                       strokeWidth={form.reaction === value ? 2.2 : 1.5} />
                     <span className={`text-[15px] font-semibold ${form.reaction === value ? 'text-bark' : 'text-stone'}`}>{label}</span>
@@ -499,7 +499,7 @@ export default function LogMeal() {
                         className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                           ${form.triggers.includes(t)
                             ? 'bg-terracotta text-white border-terracotta shadow-md'
-                            : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
+                            : 'bg-surface-el text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                         {t}
                       </button>
                     ))}
@@ -518,7 +518,7 @@ export default function LogMeal() {
                     className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                       ${form.supports.includes(s)
                         ? 'bg-terracotta text-white border-terracotta shadow-md'
-                        : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
+                        : 'bg-surface-el text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                     {s}
                   </button>
                 ))}
@@ -530,10 +530,10 @@ export default function LogMeal() {
               <div className="space-y-3">
                 <textarea ref={inputRef} value={form.notes} onChange={(e) => set('notes')(e.target.value)}
                   onKeyDown={handleNotesKeyDown} rows={4}
-                  className="w-full px-5 py-5 bg-white/60 border-2 border-sand/50 rounded-2xl text-charcoal placeholder:text-stone-light focus:outline-none focus:border-terracotta-muted transition-all duration-200 resize-none"
+                  className="w-full px-5 py-5 bg-surface-el border-2 border-sand/50 rounded-2xl text-charcoal placeholder:text-stone-light focus:outline-none focus:border-terracotta-muted transition-all duration-200 resize-none"
                   placeholder="Symptoms, cravings, anything worth noting..." />
                 <button type="button" onClick={() => { set('notes')(''); handleSubmit() }}
-                  className="option-bounce w-full py-4 rounded-2xl text-[15px] font-semibold border-2 border-sand/40 bg-white/70 text-bark hover:border-terracotta-muted transition-all duration-200 cursor-pointer">
+                  className="option-bounce w-full py-4 rounded-2xl text-[15px] font-semibold border-2 border-sand/40 bg-surface-el text-bark hover:border-terracotta-muted transition-all duration-200 cursor-pointer">
                   Nope, log it!
                 </button>
               </div>
