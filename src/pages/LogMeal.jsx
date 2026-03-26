@@ -29,7 +29,7 @@ const STEPS = [
   { id: 'time', title: 'When?', icon: Clock, required: true, multi: false },
   { id: 'mode', title: 'How do you want to log?', icon: Layers, required: true, multi: false },
   { id: 'context', title: 'Where did you eat?', icon: MapPin, required: false, multi: true },
-  { id: 'prep', title: 'How was it prepared?', icon: ChefHat, required: false, multi: true },
+  { id: 'prep', title: 'How was it prepared?', icon: ChefHat, required: false, multi: false },
   { id: 'portion', title: 'How much did you eat?', icon: Gauge, required: false, multi: false },
   { id: 'reaction', title: "How'd you feel after?", icon: Heart, required: false, multi: false },
   { id: 'triggers', title: 'Notice any triggers?', icon: AlertTriangle, required: false, multi: true },
@@ -412,7 +412,7 @@ export default function LogMeal() {
               </div>
             )}
 
-            {/* PREP */}
+            {/* PREP — single select, auto-advance */}
             {currentStepDef?.id === 'prep' && (
               <div>
                 <div className="grid grid-cols-2 gap-2.5">
@@ -421,10 +421,10 @@ export default function LogMeal() {
                     const bS = suggestions.preps.includes(b) ? 0 : 1
                     return aS - bS
                   }).map((p) => {
-                    const selected = form.preparation_styles.includes(p)
+                    const selected = form.preparation_styles[0] === p
                     const suggested = suggestions.preps.includes(p)
                     return (
-                      <button key={p} type="button" onClick={() => toggleMulti('preparation_styles', p)}
+                      <button key={p} type="button" onClick={() => { set('preparation_styles')([p]); setTimeout(goNext, 500) }}
                         className={`option-bounce relative py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                           ${selected
                             ? 'bg-terracotta text-white border-terracotta shadow-md'
