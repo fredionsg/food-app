@@ -382,17 +382,17 @@ export default function LogMeal() {
               </div>
             )}
 
-            {/* CONTEXT (one question) */}
+            {/* CONTEXT */}
             {currentStepDef?.id === 'context' && (
               <div>
                 <p className="text-xs text-stone-light mb-4">Pre-filled for "{form.meal_name}" — tap to adjust</p>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5">
                   {ALL_CONTEXTS.map((c) => (
                     <button key={c} type="button" onClick={() => toggleMulti('contexts', c)}
-                      className={`option-bounce px-5 py-3.5 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border
+                      className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                         ${form.contexts.includes(c)
                           ? 'bg-terracotta text-white border-terracotta shadow-md'
-                          : 'bg-white/70 text-bark border-sand/50 hover:border-terracotta-muted'}`}>
+                          : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                       {c}
                     </button>
                   ))}
@@ -400,17 +400,17 @@ export default function LogMeal() {
               </div>
             )}
 
-            {/* PREP (one question) */}
+            {/* PREP */}
             {currentStepDef?.id === 'prep' && (
               <div>
                 <p className="text-xs text-stone-light mb-4">Pre-filled for "{form.meal_name}" — tap to adjust</p>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5">
                   {ALL_PREP_STYLES.map((p) => (
                     <button key={p} type="button" onClick={() => toggleMulti('preparation_styles', p)}
-                      className={`option-bounce px-5 py-3.5 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border
+                      className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                         ${form.preparation_styles.includes(p)
                           ? 'bg-terracotta text-white border-terracotta shadow-md'
-                          : 'bg-white/70 text-bark border-sand/50 hover:border-terracotta-muted'}`}>
+                          : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                       {p}
                     </button>
                   ))}
@@ -418,50 +418,50 @@ export default function LogMeal() {
               </div>
             )}
 
-            {/* PORTION (one question, single select, auto-advance) */}
+            {/* PORTION */}
             {currentStepDef?.id === 'portion' && (
-              <div className="flex flex-wrap justify-center gap-4 py-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 {PORTIONS.map(({ value, label, size }) => (
                   <button key={value} type="button" onClick={() => selectSingle('portion_size', value)}
-                    className={`option-bounce flex flex-col items-center gap-2.5 w-24 py-5 rounded-2xl transition-all duration-200 cursor-pointer border-2
+                    className={`option-bounce flex items-center gap-3 py-4 px-5 rounded-2xl transition-all duration-200 cursor-pointer border-2 text-left
                       ${form.portion_size === value
-                        ? 'bg-terracotta/10 border-terracotta scale-105'
-                        : 'bg-white/50 border-transparent hover:border-sand'}`}>
+                        ? 'bg-terracotta/10 border-terracotta'
+                        : 'bg-white/70 border-sand/40 hover:border-terracotta-muted'}`}>
                     <span className={`${size} leading-none`}>🍽</span>
-                    <span className={`text-sm font-semibold ${form.portion_size === value ? 'text-terracotta' : 'text-stone'}`}>{label}</span>
+                    <span className={`text-[15px] font-semibold ${form.portion_size === value ? 'text-terracotta' : 'text-bark'}`}>{label}</span>
                   </button>
                 ))}
               </div>
             )}
 
-            {/* REACTION (one question, single select, auto-advance) */}
+            {/* REACTION */}
             {currentStepDef?.id === 'reaction' && (
-              <div className="flex justify-center gap-3 py-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 {REACTIONS.map(({ value, icon: Icon, label, bg, ring, text }) => (
                   <button key={value} type="button" onClick={() => selectSingle('reaction', value)}
-                    className={`option-bounce flex flex-col items-center gap-2.5 py-6 px-3 rounded-2xl transition-all duration-200 cursor-pointer flex-1 max-w-[80px] border-2
+                    className={`option-bounce flex items-center gap-3 py-4 px-5 rounded-2xl transition-all duration-200 cursor-pointer border-2 text-left
                       ${form.reaction === value
-                        ? `${bg} ${ring} ring-2 border-transparent scale-110 -translate-y-1`
-                        : 'bg-white/50 border-transparent hover:bg-sand-lighter'}`}>
-                    <Icon className={`w-9 h-9 ${form.reaction === value ? text : 'text-stone-light'}`}
+                        ? `${bg} ${ring} ring-2 border-transparent`
+                        : 'bg-white/70 border-sand/40 hover:border-terracotta-muted'}`}>
+                    <Icon className={`w-7 h-7 shrink-0 ${form.reaction === value ? text : 'text-stone-light'}`}
                       strokeWidth={form.reaction === value ? 2.2 : 1.5} />
-                    <span className={`text-xs font-bold tracking-wide ${form.reaction === value ? 'text-bark' : 'text-stone-light'}`}>{label}</span>
+                    <span className={`text-[15px] font-semibold ${form.reaction === value ? 'text-bark' : 'text-stone'}`}>{label}</span>
                   </button>
                 ))}
               </div>
             )}
 
-            {/* TRIGGERS (one question) */}
+            {/* TRIGGERS */}
             {currentStepDef?.id === 'triggers' && (
               <div>
                 {triggerOptions.length > 0 ? (
-                  <div className="flex flex-wrap gap-2.5">
+                  <div className="grid grid-cols-2 gap-2.5">
                     {triggerOptions.map((t) => (
                       <button key={t} type="button" onClick={() => toggleMulti('triggers', t)}
-                        className={`option-bounce px-5 py-3.5 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border
+                        className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                           ${form.triggers.includes(t)
                             ? 'bg-terracotta text-white border-terracotta shadow-md'
-                            : 'bg-white/70 text-bark border-sand/50 hover:border-terracotta-muted'}`}>
+                            : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                         {t}
                       </button>
                     ))}
@@ -472,15 +472,15 @@ export default function LogMeal() {
               </div>
             )}
 
-            {/* SUPPORTS (one question) */}
+            {/* SUPPORTS */}
             {currentStepDef?.id === 'supports' && (
-              <div className="flex flex-wrap gap-2.5">
+              <div className="grid grid-cols-2 gap-2.5">
                 {ALL_SUPPORTS.map((s) => (
                   <button key={s} type="button" onClick={() => toggleMulti('supports', s)}
-                    className={`option-bounce px-5 py-3.5 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border
+                    className={`option-bounce py-4 px-4 rounded-2xl text-[15px] font-semibold transition-all duration-200 cursor-pointer border-2 text-center
                       ${form.supports.includes(s)
                         ? 'bg-terracotta text-white border-terracotta shadow-md'
-                        : 'bg-white/70 text-bark border-sand/50 hover:border-terracotta-muted'}`}>
+                        : 'bg-white/70 text-bark border-sand/40 hover:border-terracotta-muted'}`}>
                     {s}
                   </button>
                 ))}
