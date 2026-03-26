@@ -489,12 +489,15 @@ export default function LogMeal() {
 
             {/* NOTES (one question) */}
             {currentStepDef?.id === 'notes' && (
-              <div>
+              <div className="space-y-3">
                 <textarea ref={inputRef} value={form.notes} onChange={(e) => set('notes')(e.target.value)}
                   onKeyDown={handleNotesKeyDown} rows={4}
                   className="w-full px-5 py-5 bg-white/60 border-2 border-sand/50 rounded-2xl text-charcoal placeholder:text-stone-light focus:outline-none focus:border-terracotta-muted transition-all duration-200 resize-none"
                   placeholder="Symptoms, cravings, anything worth noting..." />
-                <p className="text-xs text-stone-light text-center mt-2">Press Cmd+Enter to finish</p>
+                <button type="button" onClick={() => { set('notes')(''); handleSubmit() }}
+                  className="option-bounce w-full py-4 rounded-2xl text-[15px] font-semibold border-2 border-sand/40 bg-white/70 text-bark hover:border-terracotta-muted transition-all duration-200 cursor-pointer">
+                  Nope, log it!
+                </button>
               </div>
             )}
           </div>
