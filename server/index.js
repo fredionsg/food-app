@@ -15,7 +15,11 @@ const PORT = 3001
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production'
 
 // ── Database ──
-const db = new Database(join(__dirname, '..', 'data.sqlite'))
+// In Vercel serverless, use /tmp for writable storage
+const dbPath = process.env.VERCEL
+  ? '/tmp/data.sqlite'
+  : join(__dirname, '..', 'data.sqlite')
+const db = new Database(dbPath)
 db.pragma('journal_mode = WAL')
 db.pragma('foreign_keys = ON')
 
@@ -276,7 +280,11 @@ app.get('/api/profile/export', authenticate, (req, res) => {
   doc.end()
 })
 
-// ── Start ──
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-})
+// ── Start (local dev only) ──
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
+  })
+}
+
+export default app
