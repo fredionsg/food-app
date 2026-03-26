@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Toast from '../components/Toast'
-import { Frown, Meh, Smile, SmilePlus, Zap, ArrowLeft, ArrowRight, SkipForward, Check, Leaf, Utensils, Clock, MapPin, ChefHat, Gauge, Heart, AlertTriangle, Pill, StickyNote } from 'lucide-react'
+import { Frown, Meh, Smile, SmilePlus, Zap, ArrowLeft, ArrowRight, SkipForward, Check, Utensils, Clock, MapPin, Gauge, Heart, AlertTriangle, StickyNote } from 'lucide-react'
 
-// ── Data ──
-const CONTEXTS = ['Home-cooked', 'Takeout', 'Restaurant', 'Fast casual', 'Cafe', 'Work cafe', 'Street food', 'Travel', 'Potluck']
-const PREP_STYLES = ['Boiled', 'Baked', 'Stir-fried', 'Deep fried', 'Grilled', 'Steamed', 'Raw/Fresh']
-const SUPPORTS = ['Digestive enzymes', 'Antihistamine', 'Peppermint tea', 'Ginger', 'Probiotic', 'Electrolyte drink', 'Breathing/relaxation']
+// ── Static Data ──
+const ALL_CONTEXTS = ['Home-cooked', 'Takeout', 'Restaurant', 'Fast casual', 'Cafe', 'Work cafe', 'Street food', 'Travel', 'Potluck']
+const ALL_PREP_STYLES = ['Boiled', 'Baked', 'Stir-fried', 'Deep fried', 'Grilled', 'Steamed', 'Raw/Fresh']
+const ALL_SUPPORTS = ['Digestive enzymes', 'Antihistamine', 'Peppermint tea', 'Ginger', 'Probiotic', 'Electrolyte drink', 'Breathing/relaxation']
 const PORTIONS = [
   { value: 'nibbles', label: 'Nibbles', size: 'text-lg' },
   { value: 'light', label: 'Light bite', size: 'text-xl' },
@@ -22,7 +22,6 @@ const REACTIONS = [
   { value: 'good', icon: SmilePlus, label: 'Good', bg: 'bg-sage/10', ring: 'ring-sage', text: 'text-sage' },
   { value: 'great', icon: Zap, label: 'Great!', bg: 'bg-sage/15', ring: 'ring-sage-dark', text: 'text-sage-dark' },
 ]
-
 const STEPS = [
   { id: 'name', title: 'What did you eat?', icon: Utensils, required: true },
   { id: 'time', title: 'When?', icon: Clock, required: true },
@@ -32,6 +31,51 @@ const STEPS = [
   { id: 'triggers', title: 'Anything to flag?', icon: AlertTriangle, required: false },
   { id: 'notes', title: 'Any notes?', icon: StickyNote, required: false },
 ]
+
+// ── Smart Suggestion Engine ──
+// Maps keywords in meal names to likely contexts and prep styles.
+// Returns a small set of top suggestions + a "show all" escape hatch.
+const MEAL_HINTS = [
+  { words: ['coffee', 'latte', 'cappuccino', 'espresso', 'matcha', 'tea', 'chai'], contexts: ['Cafe', 'Work cafe'], preps: [] },
+  { words: ['toast', 'eggs', 'omelette', 'omelet', 'cereal', 'porridge', 'oats', 'granola', 'pancake', 'waffle', 'smoothie', 'yogurt', 'yoghurt'], contexts: ['Home-cooked'], preps: ['Grilled', 'Boiled', 'Raw/Fresh'] },
+  { words: ['sandwich', 'wrap', 'bagel', 'baguette', 'sub'], contexts: ['Home-cooked', 'Cafe', 'Fast casual'], preps: ['Raw/Fresh'] },
+  { words: ['salad', 'poke', 'sushi', 'sashimi', 'ceviche'], contexts: ['Restaurant', 'Takeout'], preps: ['Raw/Fresh'] },
+  { words: ['pizza', 'burger', 'fries', 'chips', 'nugget', 'hot dog', 'kebab', 'shawarma', 'doner'], contexts: ['Fast casual', 'Takeout', 'Street food'], preps: ['Deep fried', 'Grilled', 'Baked'] },
+  { words: ['curry', 'dal', 'dhal', 'biryani', 'tikka', 'masala', 'naan', 'roti', 'samosa', 'bhaji'], contexts: ['Restaurant', 'Takeout', 'Home-cooked'], preps: ['Stir-fried', 'Boiled', 'Deep fried'] },
+  { words: ['stir-fry', 'stir fry', 'noodle', 'ramen', 'pho', 'pad thai', 'lo mein', 'chow', 'wok', 'fried rice', 'dim sum', 'dumpling', 'spring roll'], contexts: ['Restaurant', 'Takeout', 'Street food'], preps: ['Stir-fried', 'Steamed', 'Deep fried'] },
+  { words: ['pasta', 'spaghetti', 'penne', 'risotto', 'lasagna', 'gnocchi', 'ravioli'], contexts: ['Home-cooked', 'Restaurant'], preps: ['Boiled', 'Baked'] },
+  { words: ['steak', 'roast', 'bbq', 'barbeque', 'barbecue', 'ribs', 'wings', 'grilled'], contexts: ['Restaurant', 'Home-cooked'], preps: ['Grilled', 'Baked'] },
+  { words: ['soup', 'stew', 'broth', 'chowder', 'chili'], contexts: ['Home-cooked', 'Restaurant'], preps: ['Boiled'] },
+  { words: ['cake', 'brownie', 'cookie', 'muffin', 'croissant', 'pastry', 'donut', 'doughnut', 'ice cream', 'gelato', 'dessert', 'chocolate'], contexts: ['Cafe', 'Home-cooked'], preps: ['Baked', 'Raw/Fresh'] },
+  { words: ['fish', 'salmon', 'tuna', 'cod', 'prawn', 'shrimp'], contexts: ['Restaurant', 'Home-cooked'], preps: ['Grilled', 'Steamed', 'Baked'] },
+  { words: ['takeout', 'takeaway', 'delivery', 'uber', 'deliveroo', 'just eat'], contexts: ['Takeout'], preps: [] },
+  { words: ['canteen', 'cafeteria', 'work lunch', 'office'], contexts: ['Work cafe'], preps: [] },
+  { words: ['travel', 'airport', 'train', 'flight', 'motorway', 'service station'], contexts: ['Travel', 'Fast casual'], preps: [] },
+  { words: ['potluck', 'party', 'buffet', 'gathering'], contexts: ['Potluck'], preps: [] },
+]
+
+function getSuggestions(mealName) {
+  const lower = mealName.toLowerCase()
+  const contextSet = new Set()
+  const prepSet = new Set()
+
+  for (const hint of MEAL_HINTS) {
+    if (hint.words.some((w) => lower.includes(w))) {
+      hint.contexts.forEach((c) => contextSet.add(c))
+      hint.preps.forEach((p) => prepSet.add(p))
+    }
+  }
+
+  // Fallback defaults if nothing matched
+  if (contextSet.size === 0) contextSet.add('Home-cooked')
+  if (prepSet.size === 0) prepSet.add('Grilled')
+
+  return {
+    contexts: [...contextSet],
+    preps: [...prepSet],
+    portion: 'regular', // sensible default
+  }
+}
 
 function nowLocal() {
   const d = new Date()
@@ -79,8 +123,7 @@ function Celebration({ onDone }) {
   }, [onDone])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] card-flow-enter">
-      {/* Floating particles */}
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cream card-flow-enter">
       <div className="relative mb-8">
         {['🌿', '🍃', '✨', '🌱', '🍂'].map((emoji, i) => (
           <span key={i} className="absolute text-2xl"
@@ -114,7 +157,9 @@ export default function LogMeal() {
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState(null)
   const [done, setDone] = useState(false)
+  const [suggestionsApplied, setSuggestionsApplied] = useState(false)
   const inputRef = useRef(null)
+  const topRef = useRef(null)
 
   const [form, setForm] = useState({
     meal_name: '', meal_time: nowLocal(),
@@ -131,12 +176,32 @@ export default function LogMeal() {
     }
   }, [user])
 
-  // Auto-focus text inputs when step changes
+  // Scroll to top on every step change
+  useEffect(() => {
+    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [step])
+
+  // Auto-focus text inputs
   useEffect(() => {
     if (step === 0 || step === 6) {
       setTimeout(() => inputRef.current?.focus(), 400)
     }
   }, [step])
+
+  // Apply smart pre-selections when leaving the name step (step 0 → 1)
+  // Only once per meal name so the user can still override
+  useEffect(() => {
+    if (step >= 1 && !suggestionsApplied && form.meal_name.trim()) {
+      const s = getSuggestions(form.meal_name)
+      setForm((f) => ({
+        ...f,
+        contexts: s.contexts,
+        preparation_styles: s.preps,
+        portion_size: s.portion,
+      }))
+      setSuggestionsApplied(true)
+    }
+  }, [step, suggestionsApplied, form.meal_name])
 
   const set = (field) => (value) =>
     setForm((f) => ({ ...f, [field]: typeof value === 'function' ? value(f[field]) : value }))
@@ -183,13 +248,11 @@ export default function LogMeal() {
     }
   }
 
-  // Auto-advance helper for single-select fields
   const selectAndAdvance = (field, value, delay = 400) => {
     set(field)(value)
     setTimeout(goNext, delay)
   }
 
-  // Toggle for multi-select (no auto-advance)
   const toggleMulti = (field, value) => {
     setForm((f) => {
       const arr = f[field]
@@ -222,7 +285,9 @@ export default function LogMeal() {
 
   return (
     <div className="min-h-[70vh] flex flex-col">
-      {/* Top bar: back + progress */}
+      <div ref={topRef} />
+
+      {/* Top bar */}
       <div className="flex items-center justify-between mb-6">
         <button type="button" onClick={step === 0 ? () => navigate('/home') : goBack}
           className="flex items-center gap-1.5 text-sm font-medium text-stone hover:text-terracotta transition-colors cursor-pointer p-1">
@@ -248,6 +313,8 @@ export default function LogMeal() {
 
           {/* Step content */}
           <div className="flex-1">
+
+            {/* Step 0: Meal name */}
             {step === 0 && (
               <div className="space-y-4">
                 <input ref={inputRef} value={form.meal_name} onChange={(e) => set('meal_name')(e.target.value)}
@@ -258,6 +325,7 @@ export default function LogMeal() {
               </div>
             )}
 
+            {/* Step 1: Time */}
             {step === 1 && (
               <div className="space-y-4">
                 <button type="button"
@@ -275,12 +343,14 @@ export default function LogMeal() {
               </div>
             )}
 
+            {/* Step 2: Context + Prep (all shown, suggestions pre-selected) */}
             {step === 2 && (
               <div className="space-y-6">
                 <div>
-                  <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-3">Where?</p>
+                  <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-1">Where?</p>
+                  <p className="text-xs text-stone-light mb-3">We picked some based on "{form.meal_name}" — adjust if needed</p>
                   <div className="flex flex-wrap gap-2">
-                    {CONTEXTS.map((c) => (
+                    {ALL_CONTEXTS.map((c) => (
                       <TapChip key={c} label={c} active={form.contexts.includes(c)}
                         onClick={() => toggleMulti('contexts', c)} />
                     ))}
@@ -289,7 +359,7 @@ export default function LogMeal() {
                 <div>
                   <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-3">How was it prepared?</p>
                   <div className="flex flex-wrap gap-2">
-                    {PREP_STYLES.map((p) => (
+                    {ALL_PREP_STYLES.map((p) => (
                       <TapChip key={p} label={p} active={form.preparation_styles.includes(p)}
                         onClick={() => toggleMulti('preparation_styles', p)} />
                     ))}
@@ -298,6 +368,7 @@ export default function LogMeal() {
               </div>
             )}
 
+            {/* Step 3: Portion */}
             {step === 3 && (
               <div className="flex flex-wrap justify-center gap-4 py-4">
                 {PORTIONS.map(({ value, label, size }) => (
@@ -314,6 +385,7 @@ export default function LogMeal() {
               </div>
             )}
 
+            {/* Step 4: Reaction */}
             {step === 4 && (
               <div className="flex justify-center gap-3 py-4">
                 {REACTIONS.map(({ value, icon: Icon, label, bg, ring, text }) => (
@@ -331,11 +403,12 @@ export default function LogMeal() {
               </div>
             )}
 
+            {/* Step 5: Triggers + Supports (only show relevant ones) */}
             {step === 5 && (
               <div className="space-y-6">
                 {triggerOptions.length > 0 && (
                   <div>
-                    <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-3">Known triggers</p>
+                    <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-3">Any triggers?</p>
                     <div className="flex flex-wrap gap-2">
                       {triggerOptions.map((t) => (
                         <TapChip key={t} label={t} active={form.triggers.includes(t)}
@@ -345,9 +418,9 @@ export default function LogMeal() {
                   </div>
                 )}
                 <div>
-                  <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-3">Meds or supports?</p>
+                  <p className="text-[13px] font-semibold uppercase tracking-wide text-stone mb-3">Take anything for it?</p>
                   <div className="flex flex-wrap gap-2">
-                    {SUPPORTS.map((s) => (
+                    {ALL_SUPPORTS.map((s) => (
                       <TapChip key={s} label={s} active={form.supports.includes(s)}
                         onClick={() => toggleMulti('supports', s)} />
                     ))}
@@ -356,6 +429,7 @@ export default function LogMeal() {
               </div>
             )}
 
+            {/* Step 6: Notes */}
             {step === 6 && (
               <div>
                 <textarea ref={inputRef} value={form.notes} onChange={(e) => set('notes')(e.target.value)}
@@ -381,7 +455,7 @@ export default function LogMeal() {
         )}
         <button type="button"
           onClick={isLast ? handleSubmit : goNext}
-          disabled={step === 0 && !form.meal_name.trim() || saving}
+          disabled={(step === 0 && !form.meal_name.trim()) || saving}
           className={`flex-1 flex items-center justify-center gap-2 py-3.5 font-semibold rounded-2xl transition-all duration-200 cursor-pointer disabled:opacity-40 shadow-sm
             ${isLast
               ? 'bg-sage text-white hover:bg-sage-dark'
