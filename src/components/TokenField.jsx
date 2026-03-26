@@ -27,18 +27,23 @@ export default function TokenField({ label, tokens, onChange, placeholder = 'Typ
 
   return (
     <div>
-      {label && <label className="block text-sm font-medium text-bark mb-2">{label}</label>}
-      <div className="min-h-[48px] bg-white border border-sand rounded-xl px-3 py-2 flex flex-wrap gap-2 focus-within:ring-2 focus-within:ring-sage/30 focus-within:border-sage transition-all">
+      {label && (
+        <label className="block text-[13px] font-semibold uppercase tracking-wide text-stone mb-2.5">
+          {label}
+        </label>
+      )}
+      <div className="min-h-[52px] bg-cream border border-sand rounded-2xl px-3 py-2.5 flex flex-wrap gap-2 focus-within:ring-2 focus-within:ring-terracotta/20 focus-within:border-terracotta-muted transition-all duration-200">
         {tokens.map((token, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-1 bg-sand-light text-bark text-sm px-3 py-1 rounded-full"
+            className="inline-flex items-center gap-1.5 bg-sage/10 text-sage-dark text-sm font-medium px-3 py-1.5 rounded-xl border border-sage/20"
           >
             {token}
             <button
               type="button"
               onClick={() => removeToken(i)}
-              className="text-stone hover:text-terracotta transition-colors cursor-pointer"
+              className="text-sage-light hover:text-terracotta transition-colors cursor-pointer"
+              aria-label={`Remove ${token}`}
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -50,7 +55,7 @@ export default function TokenField({ label, tokens, onChange, placeholder = 'Typ
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={tokens.length === 0 ? placeholder : ''}
-          className="flex-1 min-w-[120px] bg-transparent outline-none text-sm text-charcoal placeholder:text-stone-light"
+          className="flex-1 min-w-[120px] bg-transparent outline-none text-sm text-charcoal placeholder:text-stone-light py-1"
         />
       </div>
     </div>

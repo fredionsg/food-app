@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Leaf, Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
+import LeafLogo from '../components/LeafLogo'
+import { OrganicBlob } from '../components/BotanicalAccent'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -27,53 +29,57 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col items-center justify-center px-6 py-12">
-      <div className="w-full max-w-sm">
-        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-stone hover:text-bark transition-colors mb-8">
+    <div className="grain min-h-screen bg-cream flex flex-col items-center justify-center px-6 py-12 relative overflow-hidden">
+      <OrganicBlob className="absolute -top-40 -right-40 w-[500px] h-[500px]" color="sage" />
+      <OrganicBlob className="absolute -bottom-40 -left-40 w-[400px] h-[400px]" color="terracotta" />
+
+      <div className="relative w-full max-w-sm">
+        <Link to="/" className="animate-fade-up inline-flex items-center gap-1.5 text-sm font-medium text-stone hover:text-terracotta transition-colors mb-10">
           <ArrowLeft className="w-4 h-4" />
           Back
         </Link>
 
-        <div className="flex items-center gap-3 mb-2">
-          <Leaf className="w-6 h-6 text-sage" />
-          <h1 className="font-serif text-2xl font-semibold text-bark">Welcome back</h1>
+        <div className="animate-fade-up stagger-1">
+          <LeafLogo className="w-10 h-10 mb-5" />
+          <h1 className="font-serif text-3xl font-semibold text-bark tracking-tight mb-1">Welcome back</h1>
+          <p className="text-stone font-light mb-8">Sign in to continue</p>
         </div>
-        <p className="text-stone mb-8">Log in to your account</p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5 animate-fade-up stagger-2">
           {error && (
-            <div className="bg-error-light text-error text-sm px-4 py-3 rounded-xl">
+            <div className="bg-error-light text-error text-sm px-4 py-3 rounded-2xl border border-error/10 font-medium">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-bark mb-2">Email</label>
+            <label className="block text-[13px] font-semibold uppercase tracking-wide text-stone mb-2">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 bg-white border border-sand rounded-xl text-charcoal placeholder:text-stone-light focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage transition-all"
+              className="w-full px-4 py-3.5 bg-cream border border-sand rounded-2xl text-charcoal placeholder:text-stone-light focus:outline-none focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta-muted transition-all duration-200"
               placeholder="you@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-bark mb-2">Password</label>
+            <label className="block text-[13px] font-semibold uppercase tracking-wide text-stone mb-2">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 pr-12 bg-white border border-sand rounded-xl text-charcoal placeholder:text-stone-light focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage transition-all"
+                className="w-full px-4 py-3.5 pr-12 bg-cream border border-sand rounded-2xl text-charcoal placeholder:text-stone-light focus:outline-none focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta-muted transition-all duration-200"
                 placeholder="Your password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone hover:text-bark transition-colors cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-light hover:text-terracotta transition-colors cursor-pointer p-1"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
@@ -83,15 +89,15 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-sage text-white font-medium rounded-2xl hover:bg-sage-dark transition-all duration-200 disabled:opacity-50 shadow-sm cursor-pointer"
+            className="w-full py-4 bg-terracotta text-white font-semibold rounded-2xl hover:bg-terracotta-dark transition-all duration-200 disabled:opacity-50 shadow-sm cursor-pointer"
           >
-            {loading ? 'Logging in...' : 'Log in'}
+            {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-stone">
-          Don't have an account?{' '}
-          <Link to="/signup" className="text-sage font-medium hover:text-sage-dark transition-colors">Sign up</Link>
+        <p className="animate-fade-up stagger-3 mt-8 text-center text-sm text-stone">
+          New here?{' '}
+          <Link to="/signup" className="text-terracotta font-semibold hover:text-terracotta-dark transition-colors">Create an account</Link>
         </p>
       </div>
     </div>

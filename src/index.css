@@ -1,54 +1,92 @@
 @import "tailwindcss";
 
-/* ── Earthy Modern Palette ── */
+/* ── Nature Distilled — Earthy Modern Design System ── */
 :root {
+  /* Core earth tones */
   --sage: #5C6B4F;
   --sage-light: #8A9A7B;
   --sage-dark: #3D4A34;
-  --olive: #7C8C5E;
+  --sage-muted: #A8B89A;
+  --olive: #6B7B3C;
+  --olive-light: #94A86A;
+
+  /* Warm neutrals */
   --sand: #D4C9B0;
   --sand-light: #EDE8DB;
-  --sand-lighter: #F7F4ED;
-  --cream: #FDFBF7;
-  --terracotta: #C17952;
+  --sand-lighter: #F5F0E6;
+  --cream: #FAF6EE;
+  --parchment: #F0EAD6;
+
+  /* Warm accents */
+  --terracotta: #C67B5C;
+  --terracotta-dark: #A85E3F;
   --terracotta-light: #E8A882;
-  --clay: #A0694B;
-  --bark: #5A3E2B;
+  --terracotta-muted: #D4A088;
+  --clay: #B5651D;
+  --clay-light: #D4A574;
+  --amber: #C89B3C;
+
+  /* Deep tones */
+  --bark: #4A3728;
   --bark-light: #7D5F49;
-  --charcoal: #2E2E2E;
-  --charcoal-light: #4A4A4A;
-  --stone: #6B6B6B;
-  --stone-light: #9A9A9A;
-  --error: #C25450;
-  --error-light: #FDECEA;
+  --bark-deep: #2E1F14;
+
+  /* Text hierarchy */
+  --charcoal: #2C2416;
+  --charcoal-light: #4A4238;
+  --stone: #6B6156;
+  --stone-light: #9A9188;
+
+  /* Semantic */
+  --error: #B84233;
+  --error-light: #FDF0ED;
   --success: #5C6B4F;
   --success-light: #EDF2E8;
+  --warning: #C89B3C;
+  --warning-light: #FDF6E3;
+
+  /* Grain texture */
+  --grain-opacity: 0.035;
+  --organic-radius: 20px;
+  --shadow-soft: 0 4px 24px -4px rgba(74, 55, 40, 0.08);
+  --shadow-lifted: 0 8px 32px -8px rgba(74, 55, 40, 0.12);
+  --shadow-glow: 0 0 0 4px rgba(198, 123, 92, 0.12);
 }
 
 @theme {
-  --font-sans: 'DM Sans', system-ui, sans-serif;
-  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Raleway', system-ui, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
   --color-sage: #5C6B4F;
   --color-sage-light: #8A9A7B;
   --color-sage-dark: #3D4A34;
-  --color-olive: #7C8C5E;
+  --color-sage-muted: #A8B89A;
+  --color-olive: #6B7B3C;
+  --color-olive-light: #94A86A;
   --color-sand: #D4C9B0;
   --color-sand-light: #EDE8DB;
-  --color-sand-lighter: #F7F4ED;
-  --color-cream: #FDFBF7;
-  --color-terracotta: #C17952;
+  --color-sand-lighter: #F5F0E6;
+  --color-cream: #FAF6EE;
+  --color-parchment: #F0EAD6;
+  --color-terracotta: #C67B5C;
+  --color-terracotta-dark: #A85E3F;
   --color-terracotta-light: #E8A882;
-  --color-clay: #A0694B;
-  --color-bark: #5A3E2B;
+  --color-terracotta-muted: #D4A088;
+  --color-clay: #B5651D;
+  --color-clay-light: #D4A574;
+  --color-amber: #C89B3C;
+  --color-bark: #4A3728;
   --color-bark-light: #7D5F49;
-  --color-charcoal: #2E2E2E;
-  --color-charcoal-light: #4A4A4A;
-  --color-stone: #6B6B6B;
-  --color-stone-light: #9A9A9A;
-  --color-error: #C25450;
-  --color-error-light: #FDECEA;
+  --color-bark-deep: #2E1F14;
+  --color-charcoal: #2C2416;
+  --color-charcoal-light: #4A4238;
+  --color-stone: #6B6156;
+  --color-stone-light: #9A9188;
+  --color-error: #B84233;
+  --color-error-light: #FDF0ED;
   --color-success: #5C6B4F;
   --color-success-light: #EDF2E8;
+  --color-warning: #C89B3C;
+  --color-warning-light: #FDF6E3;
 }
 
 * {
@@ -56,36 +94,122 @@
 }
 
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: 'Raleway', system-ui, sans-serif;
   background-color: var(--cream);
   color: var(--charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 3px; }
-
-/* ── Transitions ── */
-.page-enter { opacity: 0; transform: translateY(8px); }
-.page-enter-active {
-  opacity: 1; transform: translateY(0);
-  transition: opacity 300ms ease, transform 300ms ease;
+/* ── Organic Grain Overlay ── */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px;
 }
 
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--terracotta-muted); }
+
+/* ── Staggered Entrance Animations ── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-up {
+  animation: fade-up 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-fade-in {
+  animation: fade-in 400ms ease both;
+}
+.animate-scale-in {
+  animation: scale-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+.stagger-6 { animation-delay: 300ms; }
+
 /* ── Toast ── */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(1rem) scale(0.95); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
 .toast {
   position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  padding: 0.75rem 1.5rem; border-radius: 12px;
-  font-size: 0.875rem; font-weight: 500;
-  z-index: 100; animation: toast-in 300ms ease;
+  padding: 0.875rem 1.75rem; border-radius: 16px;
+  font-size: 0.875rem; font-weight: 500; font-family: 'Raleway', sans-serif;
+  z-index: 100; animation: toast-in 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: var(--shadow-lifted);
 }
 .toast-success { background: var(--sage); color: white; }
 .toast-error { background: var(--error); color: white; }
 
-@keyframes toast-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(1rem); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* ── Botanical Divider ── */
+.divider-botanical {
+  display: flex; align-items: center; gap: 16px;
+  color: var(--sand); margin: 2rem 0;
+}
+.divider-botanical::before,
+.divider-botanical::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sand), transparent);
+}
+
+/* ── Section backgrounds ── */
+.bg-warm-gradient {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--sand-lighter) 100%);
+}
+.bg-parchment-subtle {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--parchment) 50%, var(--cream) 100%);
+}
+
+/* ── Card accent borders ── */
+.card-accent-left {
+  border-left: 3px solid var(--terracotta);
+}
+.card-accent-sage {
+  border-left: 3px solid var(--sage);
+}
+.card-accent-amber {
+  border-left: 3px solid var(--amber);
+}
+
+/* ── Active chip press effect ── */
+.chip-press:active {
+  transform: scale(0.96);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-scale-in {
+    animation: none !important;
+  }
+  .toast { animation: none !important; }
 }

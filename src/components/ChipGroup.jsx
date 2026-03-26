@@ -13,7 +13,11 @@ export default function ChipGroup({ label, options, selected, onChange, multi = 
 
   return (
     <div>
-      {label && <label className="block text-sm font-medium text-bark mb-2">{label}</label>}
+      {label && (
+        <label className="block text-[13px] font-semibold uppercase tracking-wide text-stone mb-2.5">
+          {label}
+        </label>
+      )}
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
           const isActive = multi ? selected.includes(option) : selected === option
@@ -22,10 +26,10 @@ export default function ChipGroup({ label, options, selected, onChange, multi = 
               key={option}
               type="button"
               onClick={() => toggle(option)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer
+              className={`chip-press px-4 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 cursor-pointer border
                 ${isActive
-                  ? 'bg-sage text-white shadow-sm'
-                  : 'bg-white text-stone border border-sand hover:border-sage-light hover:text-bark'
+                  ? 'bg-terracotta text-white border-terracotta shadow-sm'
+                  : 'bg-cream text-bark border-sand hover:border-terracotta-muted hover:bg-sand-lighter'
                 }`}
             >
               {option}

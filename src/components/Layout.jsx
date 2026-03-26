@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Home, UtensilsCrossed, Search, FileDown, Settings, LogOut, Leaf } from 'lucide-react'
+import { Home, UtensilsCrossed, Search, FileDown, Settings, LogOut } from 'lucide-react'
+import LeafLogo from './LeafLogo'
 
 const navItems = [
   { to: '/home', icon: Home, label: 'Home' },
@@ -20,14 +21,14 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex flex-col">
+    <div className="grain min-h-screen bg-cream flex flex-col">
       {/* Desktop top bar */}
-      <header className="hidden md:flex items-center justify-between px-8 py-4 bg-white/80 backdrop-blur-sm border-b border-sand/50">
-        <div className="flex items-center gap-3">
-          <Leaf className="w-6 h-6 text-sage" />
-          <span className="font-serif text-xl font-semibold text-bark">can i eat that?</span>
+      <header className="hidden md:flex items-center justify-between px-8 py-3.5 bg-parchment/60 backdrop-blur-md border-b border-sand/40">
+        <div className="flex items-center gap-2.5">
+          <LeafLogo className="w-7 h-7" />
+          <span className="font-serif text-xl font-semibold text-bark tracking-tight">can i eat that?</span>
         </div>
-        <nav className="flex items-center gap-1">
+        <nav className="flex items-center gap-0.5">
           {navItems.map(({ to, icon: Icon, label }) => (
             <NavLink
               key={to}
@@ -35,7 +36,7 @@ export default function Layout() {
               className={({ isActive }) =>
                 `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200
                 ${isActive
-                  ? 'bg-sage text-white shadow-sm'
+                  ? 'bg-bark text-cream shadow-sm'
                   : 'text-stone hover:bg-sand-light hover:text-bark'
                 }`
               }
@@ -46,10 +47,16 @@ export default function Layout() {
           ))}
         </nav>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-stone">Hi, {user?.first_name}</span>
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-terracotta/15 flex items-center justify-center">
+              <span className="text-xs font-semibold text-terracotta">{user?.first_name?.[0]}</span>
+            </div>
+            <span className="text-sm font-medium text-bark">{user?.first_name}</span>
+          </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 text-sm text-stone hover:text-terracotta transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-sm text-stone-light hover:text-terracotta transition-colors cursor-pointer p-1"
+            aria-label="Log out"
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -57,28 +64,28 @@ export default function Layout() {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 w-full max-w-2xl mx-auto px-4 py-6 pb-24 md:pb-6 md:px-8 md:py-8">
+      <main className="flex-1 w-full max-w-2xl mx-auto px-5 py-6 pb-28 md:pb-8 md:px-8 md:py-10">
         <Outlet />
       </main>
 
       {/* Mobile bottom tab bar */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-white/90 backdrop-blur-md border-t border-sand/50 px-2 pb-[env(safe-area-inset-bottom)]">
-        <div className="flex justify-around py-2">
+      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-parchment/80 backdrop-blur-xl border-t border-sand/30 px-1 pb-[env(safe-area-inset-bottom)]">
+        <div className="flex justify-around py-1.5">
           {navItems.map(({ to, icon: Icon, label }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200
-                ${isActive ? 'text-sage' : 'text-stone-light'}`
+                `flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl text-[11px] font-semibold transition-all duration-200
+                ${isActive ? 'text-terracotta' : 'text-stone-light'}`
               }
             >
               {({ isActive }) => (
                 <>
-                  <div className={`p-1.5 rounded-xl transition-all duration-200 ${isActive ? 'bg-sage/10' : ''}`}>
-                    <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
+                  <div className={`p-2 rounded-2xl transition-all duration-200 ${isActive ? 'bg-terracotta/10' : ''}`}>
+                    <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 1.8} />
                   </div>
-                  <span>{label}</span>
+                  <span className="tracking-wide">{label}</span>
                 </>
               )}
             </NavLink>
