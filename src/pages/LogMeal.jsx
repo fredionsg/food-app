@@ -10,11 +10,11 @@ const ALL_CONTEXTS = ['Home-cooked', 'Takeout', 'Restaurant', 'Fast casual', 'Ca
 const ALL_PREP_STYLES = ['Boiled', 'Baked', 'Stir-fried', 'Deep fried', 'Grilled', 'Steamed', 'Raw/Fresh']
 const ALL_SUPPORTS = ['Digestive enzymes', 'Antihistamine', 'Peppermint tea', 'Ginger', 'Probiotic', 'Electrolyte drink', 'Breathing/relaxation']
 const PORTIONS = [
-  { value: 'nibbles', label: 'Nibbles', size: 'text-xl' },
-  { value: 'light', label: 'Light bite', size: 'text-2xl' },
-  { value: 'regular', label: 'Regular', size: 'text-3xl' },
-  { value: 'hearty', label: 'Hearty', size: 'text-4xl' },
-  { value: 'large', label: 'Large', size: 'text-5xl' },
+  { value: 'nibbles', label: 'Nibbles', bars: 1 },
+  { value: 'light', label: 'Light bite', bars: 2 },
+  { value: 'regular', label: 'Regular', bars: 3 },
+  { value: 'hearty', label: 'Hearty', bars: 4 },
+  { value: 'large', label: 'Large', bars: 5 },
 ]
 const REACTIONS = [
   { value: 'awful', icon: Frown, label: 'Awful', bg: 'bg-error/10', ring: 'ring-error', text: 'text-error' },
@@ -418,19 +418,33 @@ export default function LogMeal() {
               </div>
             )}
 
-            {/* PORTION */}
+            {/* PORTION — vertical scale */}
             {currentStepDef?.id === 'portion' && (
-              <div className="grid grid-cols-2 gap-2.5">
-                {PORTIONS.map(({ value, label, size }) => (
-                  <button key={value} type="button" onClick={() => selectSingle('portion_size', value)}
-                    className={`option-bounce flex items-center gap-3 py-4 px-5 rounded-2xl transition-all duration-200 cursor-pointer border-2 text-left
-                      ${form.portion_size === value
-                        ? 'bg-terracotta/10 border-terracotta'
-                        : 'bg-white/70 border-sand/40 hover:border-terracotta-muted'}`}>
-                    <span className={`${size} leading-none`}>🍽</span>
-                    <span className={`text-[15px] font-semibold ${form.portion_size === value ? 'text-terracotta' : 'text-bark'}`}>{label}</span>
-                  </button>
-                ))}
+              <div className="flex flex-col gap-2">
+                {PORTIONS.map(({ value, label, bars }) => {
+                  const active = form.portion_size === value
+                  return (
+                    <button key={value} type="button" onClick={() => selectSingle('portion_size', value)}
+                      className={`option-bounce flex items-center gap-4 py-4 px-5 rounded-2xl transition-all duration-200 cursor-pointer border-2 text-left
+                        ${active
+                          ? 'bg-terracotta/10 border-terracotta'
+                          : 'bg-white/70 border-sand/40 hover:border-terracotta-muted'}`}>
+                      <div className="flex gap-1 items-end h-5 shrink-0">
+                        {[1, 2, 3, 4, 5].map((b) => (
+                          <div key={b}
+                            className={`w-1.5 rounded-full transition-all duration-200 ${
+                              b <= bars
+                                ? active ? 'bg-terracotta' : 'bg-bark-light/40'
+                                : 'bg-sand/40'
+                            }`}
+                            style={{ height: `${b * 4}px` }}
+                          />
+                        ))}
+                      </div>
+                      <span className={`text-[15px] font-semibold ${active ? 'text-terracotta' : 'text-bark'}`}>{label}</span>
+                    </button>
+                  )
+                })}
               </div>
             )}
 
